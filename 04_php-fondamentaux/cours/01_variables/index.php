@@ -53,7 +53,6 @@ $fruit = ['pomme' => 'Paul', 'age' => 22];
 #object
 class Person
 {
-    
 };
 $personne = new Person();
 
@@ -63,7 +62,18 @@ $paul = null;
 #ressources
 $fichier = fopen('monFichier.txt', 'r');
 
-echo $nom;
+#var_dump($message);
+define('DBNAME', 'stock');
+const DBUSER = 'al';
+
+$nom = 'paul';
+$txt = 'n\' est jamais a l\'heure';
+$message1 = "$nom arrive toujour à l'heure";
+//concatenation
+$message2 = $nom . ' ' . $txt;
+echo $message2."\n";
+echo $nom."\n";
+
 
 ?>
 
