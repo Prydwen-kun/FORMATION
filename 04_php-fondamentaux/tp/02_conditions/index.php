@@ -65,7 +65,7 @@ if ($input3 == 20) {
 $input4 = readline("Entre nb 1:");
 $input5 = readline("entre nb 2:");
 
-if ($input4 < 0 || $input5 < 0) {
+if ($input4 < 0 xor $input5 < 0) {
     echo "negatif\n";
 } else {
     echo "positif\n";
