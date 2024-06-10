@@ -17,6 +17,7 @@ do {
 
 $randNum = rand(1, 100);
 $input1 = 0;
+$count = 0;
 do {
     $input1 = readline("Devinez le nombre(entre 1 et 100) : ");
     if ($input1 < $randNum) {
@@ -24,5 +25,11 @@ do {
     } elseif ($input1 > $randNum) {
         echo "Plus petit\n";
     }
-} while ($input1 != $randNum);
-echo "GG ! Le nombre est bien : $randNum\n";
+    $count++;
+} while ($input1 != $randNum && $count < 10);
+if ($count != 10) {
+    echo "GG ! Le nombre est bien : $randNum\n";
+    echo "deviné en $count essai !\n";
+} else {
+    echo "You lose !\n";
+}
