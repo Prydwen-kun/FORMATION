@@ -13,18 +13,15 @@ $doc = new DOMDocument();
 
 $doc->loadHTML($html);
 
-$world = $doc->documentElement;
-
-$world->append("This is array1 content : ", $doc->createElement("table"));
-//get the element you want to append to
 $pageBody = $doc->getElementById('body');
+
 //create the fragment
 $fragment = $doc->createDocumentFragment();
 //add content to fragment
 $fragment->appendXML('<div>ARRAY EXTRACTION</div>');
 //actually append the element
 $pageBody->appendChild($fragment);
-
+$pageBody->append("This is array1 content : ", $doc->createElement("table"));
 //TEST APPEND ARRAY CONTENT
 
 $countTD = 0;
@@ -52,3 +49,5 @@ for ($i = 0; $i < count($array1); $i++) {
 }
 
 echo $doc->saveHTML();
+// $container->after("beautiful", $doc->createElement("world"));
+#use ->after on a domElement to create after the other nodes
