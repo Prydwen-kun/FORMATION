@@ -10,7 +10,7 @@ h5 {
 }
 
 a {
-    margin: 10px;
+    margin: 10px auto;
     width: 100%;
 }
 
@@ -24,5 +24,5 @@ a {
     border-radius: 50%;
     height: 200px;
     width: 100%;
-    object-fit :scale-down;
+    object-fit: scale-down;
 }
