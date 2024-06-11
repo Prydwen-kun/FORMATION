@@ -88,9 +88,13 @@ $beers = [
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $beer['name'] ?></h5>
                             <p class="card-text"><?= $beer['description'] ?></p>
-                            <?php foreach ($beer['ingredients'] as $ingredient) : ?>
-                                <p class="card-text"><?= $ingredient ?></p>
-                            <?php endforeach; ?>
+                            <ul>
+                                <?php foreach ($beer['ingredients'] as $ingredient) : ?>
+                                    <li>
+                                        <p class="card-text"><?= $ingredient ?></p>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
                             <a href="<?= $beer['site'] ?>" class="btn btn-secondary">Site</a>
                             <?php foreach ($beer['socials'] as $social) : ?>
                                 <?php if ($social != '') : ?>
