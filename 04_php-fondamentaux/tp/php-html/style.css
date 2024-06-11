@@ -1,0 +1,15 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+
+h5{
+    color: rgb(36, 44, 61);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 24px;
+}
+
+a{
+    margin: 10px;
+    width: 100%;
+}

@@ -19,11 +19,12 @@ div {
 }
 
 table {
-    flex: 1 1 100%;
+    flex: 1 1 auto;
     border: 3px solid rgb(168, 168, 168);
     background-color: rgb(52, 69, 83);
     border-radius: 3px;
     padding: 40px;
+    width: 80%;
     border-collapse: separate;
     border-spacing: 1em;
 }
