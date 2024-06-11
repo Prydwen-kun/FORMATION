@@ -84,7 +84,7 @@ $beers = [
 
                 <?php foreach ($beers as $beer) : ?>
                     <div class="card col">
-                        <img src="<?= $beer['img'] ?>" class="card-img-top" style="height: 200px;object-fit :scale-down;" alt="...">
+                        <img src="<?= $beer['img'] ?>" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $beer['name'] ?></h5>
                             <p class="card-text"><?= $beer['description'] ?></p>
