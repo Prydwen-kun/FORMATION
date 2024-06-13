@@ -30,4 +30,12 @@ foreach ($user as $key => $value) {
 
 sayhello($firstname, $lastname);
 
-sayhello(lastname:'Jean',firstname:'Pierre');
+sayhello(lastname:'Jean',firstname:'Pierre'); //rentre les parametres dans un autre ordre
+
+function spreadOperator(...$values){//always as the last parameter
+    foreach($values as $value){
+        echo $value.PHP_EOL;
+    }
+}
+
+spreadOperator(1,2,3,4);

@@ -1,0 +1,245 @@
+<?php
+
+//EXO FUNCTION
+
+#exo 0
+
+function addition($num1, $num2)
+{
+    return $num1 + $num2;
+}
+function soustraction($num1, $num2)
+{
+    return $num1 - $num2;
+}
+function mult($num1, $num2)
+{
+    return $num1 * $num2;
+}
+function divide($num1, $num2)
+{
+    return $num1 / $num2;
+}
+
+#exo1
+
+function palindrome()
+{
+    $mot = readline("Entrer mot : ");
+    $mot = str_split($mot);
+    $motInverse = [];
+    for ($i = count($mot) - 1; $i >= 0; $i--) {
+
+        $motInverse[] = $mot[$i];
+
+    }
+    print_r($motInverse);
+    if ($motInverse == $mot) {
+        echo 'palindrome' . PHP_EOL;
+    } else
+        echo "not palindrome" . PHP_EOL;
+}
+
+// palindrome();
+
+function valeurAbsolue($num): float
+{
+    if ($num < 0)
+        return $num * -1;
+    else
+        return $num;
+}
+
+// echo valeurAbsolue(-5) . PHP_EOL;
+
+function supprVoyelles($chaine)
+{
+    $vowels = ['a', 'e', 'i', 'o', 'u', 'y', 'A', 'E', 'I', 'O', 'U', 'Y'];
+    $tab = str_split($chaine);
+    $chaineNoVowels = [];
+    $flagVowel = false;
+    for ($i = 0; $i < count($tab); $i++) {
+        foreach ($vowels as $letterTest) {
+            if ($tab[$i] != $letterTest) {
+                $flagVowel = false;
+
+            } else {
+                $flagVowel = true;
+                break;
+            }
+        }
+        if (!$flagVowel) {
+            $chaineNoVowels[] = $tab[$i];
+
+        }
+
+    }
+
+    return implode($chaineNoVowels);
+}
+
+// echo supprVoyelles('Maintenant') . PHP_EOL;
+
+function nombreVoyelles($chaine)
+{
+    $vowels = ['a', 'e', 'i', 'o', 'u', 'y', 'A', 'E', 'I', 'O', 'U', 'Y'];
+    $tab = str_split($chaine);
+    $countVowel = 0;
+    for ($i = 0; $i < count($tab); $i++) {
+        foreach ($vowels as $letterTest) {
+            if ($tab[$i] == $letterTest) {
+                $countVowel++;
+                break;
+            }
+        }
+    }
+
+    return $countVowel;
+}
+
+// echo nombreVoyelles('MAintEnant');
+
+#exo 5
+
+function inverseOrdreMot($chaine)
+{
+    $wordsArray = explode(' ', $chaine);
+    $chaineRenverse = [];
+    for ($i = count($wordsArray) - 1; $i >= 0; $i--) {
+        $chaineRenverse[] = $wordsArray[$i];
+    }
+    return implode(' ', $chaineRenverse);
+}
+
+// echo inverseOrdreMot('Je suis renverse bonjour');
+
+#exo6
+
+function passwordGenerate($longueur)
+{
+    $arrayRandMaj = [];
+    $arrayRandMin = [];
+    $arrayRandNum = [];
+    $password = [];
+    for ($i = 0; $i < $longueur; $i++) {
+        $arrayRandMaj[$i] = chr(rand(65, 90));
+        $arrayRandMin[$i] = chr(rand(97, 122));
+        $arrayRandNum[$i] = rand(0, 9);
+    }
+    for ($i = 0; $i < $longueur; $i++) {
+        $key = rand(1, 3);
+        switch ($key) {
+            case 1:
+                $password[$i] = $arrayRandMaj[$i];
+                break;
+            case 2:
+                $password[$i] = $arrayRandMin[$i];
+                break;
+            case 3:
+                $password[$i] = $arrayRandNum[$i];
+                break;
+
+            default:
+
+                break;
+        }
+
+
+    }
+    return implode($password);
+}
+
+// echo passwordGenerate(5);
+
+#exo7
+
+function imcCalculator($masse, $taille)
+{
+    $iMC = $masse / ($taille * $taille);
+
+    return $iMC;
+}
+
+// echo imcCalculator(89,1.80);
+
+#exo8
+
+function totalPlusTVA($horsTaxe, $tauxTVA)
+{
+
+    return ($horsTaxe * $tauxTVA) + $horsTaxe;
+}
+
+// echo totalPlusTVA(100,0.2);
+
+#exo9
+
+function remise($totalAchat, $remise)
+{
+    return $totalAchat - ($totalAchat * $remise);
+}
+
+// echo remise(100, 0.2);
+
+#exo10
+
+$books = [
+    [
+        'name' => 'livre1',
+        'author' => 'auteur1',
+        'releaseYear' => 2023,
+        'purchaseUrl' => 'http://example.com'
+    ],
+    [
+        'name' => 'livre2',
+        'author' => 'auteur2',
+        'releaseYear' => 2024,
+        'purchaseUrl' => 'http://example.com'
+    ],
+    [
+        'name' => 'livre3',
+        'author' => 'auteur3',
+        'releaseYear' => 2025,
+        'purchaseUrl' => 'http://example.com'
+    ],
+    [
+        'name' => 'livre4',
+        'author' => 'auteur5',
+        'releaseYear' => 2026,
+        'purchaseUrl' => 'http://example.com'
+    ],
+    [
+        'name' => 'livre5',
+        'author' => 'auteur5',
+        'releaseYear' => 2027,
+        'purchaseUrl' => 'http://example.com'
+    ],
+    [
+        'name' => 'livre6',
+        'author' => 'auteur6',
+        'releaseYear' => 2028,
+        'purchaseUrl' => 'http://example.com'
+    ]
+];
+
+function filtreLivre($auteur, $books)
+{
+    $nomLivre = '';
+    for ($i = 0; $i < count($books); $i++) {
+        foreach ($books[$i] as $key => $value) {
+            if ($key == 'name') {
+                $nomLivre = $value;
+            }
+
+            if ($key == 'author' && $value == $auteur) {
+                echo $nomLivre . ' écrit par ' . $value . PHP_EOL;
+            }
+        }
+    }
+
+}
+
+// filtreLivre('auteur5', $books);
+
+#exo 11
+
