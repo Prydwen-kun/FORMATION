@@ -325,8 +325,8 @@ function ajoutArticle(array &$facture)
     // print_r($facture);
 }
 
-ajoutArticle($facture);
-ajoutArticle($facture);
+// ajoutArticle($facture);
+// ajoutArticle($facture);
 
 // var_dump($facture);
 function afficherFacture($facture)
@@ -339,7 +339,7 @@ function afficherFacture($facture)
     }
 }
 
-afficherFacture($facture);
+// afficherFacture($facture);
 
 function totalFacture($facture)
 {
@@ -360,7 +360,7 @@ function totalFacture($facture)
     echo 'Total facture : ' . $sum . PHP_EOL;
 }
 
-totalFacture($facture);
+// totalFacture($facture);
 
 #exo13
 
@@ -381,7 +381,6 @@ function commande($facture)
                 $error = true;
             }
         }
-        
     }
     switch ($error) {
         case true:
@@ -395,4 +394,27 @@ function commande($facture)
     }
 }
 
-commande($facture);
+// commande($facture);
+
+echo 'Choix : 1.Ajouter Article 2.Afficher Stock 3.Commande article -1 to exit : ' . PHP_EOL;
+
+do {
+    $input = readline('Entrer choix : ');
+
+    switch ($input) {
+        case 1:
+            ajoutArticle($facture);
+            break;
+        case 2:
+            afficherFacture($facture);
+            break;
+        case 3:
+            if (!count($facture) < 1)
+                commande($facture);
+            else
+                echo "Error no item in stock DB" . PHP_EOL;
+            break;
+        default:
+            break;
+    }
+} while ($input != -1);
