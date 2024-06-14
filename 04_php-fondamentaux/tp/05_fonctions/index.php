@@ -334,7 +334,7 @@ function afficherFacture($facture)
     foreach ($facture as $id => $item) {
         echo $id . '. ';
         foreach ($item as $key => $value) {
-            echo $key . ' : ' . $value . PHP_EOL;
+            echo $key . ' : ' . $value . PHP_EOL.PHP_EOL;
         }
     }
 }
