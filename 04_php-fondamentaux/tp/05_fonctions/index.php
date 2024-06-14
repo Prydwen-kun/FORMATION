@@ -31,7 +31,6 @@ function palindrome()
     for ($i = count($mot) - 1; $i >= 0; $i--) {
 
         $motInverse[] = $mot[$i];
-
     }
     print_r($motInverse);
     if ($motInverse == $mot) {
@@ -62,7 +61,6 @@ function supprVoyelles($chaine)
         foreach ($vowels as $letterTest) {
             if ($tab[$i] != $letterTest) {
                 $flagVowel = false;
-
             } else {
                 $flagVowel = true;
                 break;
@@ -70,9 +68,7 @@ function supprVoyelles($chaine)
         }
         if (!$flagVowel) {
             $chaineNoVowels[] = $tab[$i];
-
         }
-
     }
 
     return implode($chaineNoVowels);
@@ -143,8 +139,6 @@ function passwordGenerate($longueur)
 
                 break;
         }
-
-
     }
     return implode($password);
 }
@@ -236,10 +230,169 @@ function filtreLivre($auteur, $books)
             }
         }
     }
-
 }
 
 // filtreLivre('auteur5', $books);
 
 #exo 11
 
+$movies = [
+    [
+        'title' => 'titre1',
+        'year' => 2015,
+        'actors' => ['acteur1', 'acteur2']
+    ],
+    [
+        'title' => 'titre15',
+        'year' => 1994,
+        'actors' => ['acteur9', 'acteur2']
+    ],
+    [
+        'title' => 'titre16',
+        'year' => 1994,
+        'actors' => ['acteur9', 'acteur2']
+    ],
+    [
+        'title' => 'titre2',
+        'year' => 1998,
+        'actors' => ['acteur3', 'acteur4']
+    ],
+    [
+        'title' => 'titre3',
+        'year' => 2010,
+        'actors' => ['acteur5', 'acteur3']
+    ],
+    [
+        'title' => 'titre32',
+        'year' => 2010,
+        'actors' => ['acteur5', 'acteur3']
+    ],
+    [
+        'title' => 'titre4',
+        'year' => 2004,
+        'actors' => ['acteur1', 'acteur2']
+    ]
+];
+
+function filterMoviesPerYear($anneeSortie, $movies)
+{
+    $filmOfYear = [];
+    for ($i = 0; $i < count($movies); $i++) {
+        foreach ($movies[$i] as $key => $value) {
+            if ($key == 'year' && $value == $anneeSortie) {
+                $filmOfYear[] = $movies[$i]['title'];
+            }
+        }
+    }
+    foreach ($filmOfYear as $film) {
+        echo $film . PHP_EOL;
+    }
+}
+// filterMoviesPerYear(1994,$movies);
+function sortMoviesPerYear($movies)
+{
+    $filmOfYear = [];
+
+    for ($i = 0; $i < count($movies); $i++) {
+        if (!in_array($movies[$i]['year'], $filmOfYear)) {
+            $filmOfYear[$i] = $movies[$i]['year'];
+        }
+    }
+    sort($filmOfYear);
+    print_r($filmOfYear);
+    foreach ($filmOfYear as $year) {
+        foreach ($movies as $movie) {
+            foreach ($movie as $key => $value) {
+                if ($key == 'year' && $value == $year) {
+                    echo $movie['title'] . ' sorti ' . $movie['year'] . PHP_EOL;
+                }
+            }
+            // print_r($movie);
+        }
+    }
+}
+// sortMoviesPerYear($movies);
+
+#exo12
+$facture = [];
+
+function ajoutArticle(array &$facture)
+{
+    $nomArticle = readline('Rentrez le nom de l\'article : ');
+    $quantite = readline('Nombre de produit : ');
+    $prixUnite = readline('Prix de l\'article : ');
+    $facture[] = ['nom' => $nomArticle, 'quantite' => $quantite, 'prix' => $prixUnite];
+    // print_r($facture);
+}
+
+ajoutArticle($facture);
+ajoutArticle($facture);
+
+// var_dump($facture);
+function afficherFacture($facture)
+{
+    foreach ($facture as $id => $item) {
+        echo $id . '. ';
+        foreach ($item as $key => $value) {
+            echo $key . ' : ' . $value . PHP_EOL;
+        }
+    }
+}
+
+afficherFacture($facture);
+
+function totalFacture($facture)
+{
+    $sum = 0;
+    $nbProduit = 0;
+    $prix = 0;
+    foreach ($facture as $id => $item) {
+
+        foreach ($item as $key => $value) {
+            if ($key == 'quantite') {
+                $nbProduit = $value;
+            } else if ($key == 'prix') {
+                $prix = $value;
+            }
+        }
+        $sum += $prix * $nbProduit;
+    }
+    echo 'Total facture : ' . $sum . PHP_EOL;
+}
+
+totalFacture($facture);
+
+#exo13
+
+function commande($facture)
+{
+    $sum = 0;
+    $nomProduit = readline('Nom du produit : ');
+    $nbProduit = readline('Quantité à commander : ');
+    $prix = 0;
+    $error = false;
+    foreach ($facture as $id => $item) {
+        foreach ($item as $key => $value) {
+
+            if ($key == 'nom' && $value == $nomProduit && $item['quantite'] - $nbProduit >= 0) {
+                $prix = $item['prix'];
+                $sum += $prix * $nbProduit;
+            } else if ($item['quantite'] - $nbProduit < 0) {
+                $error = true;
+            }
+        }
+        
+    }
+    switch ($error) {
+        case true:
+            echo 'Erreur - commande supérieur au stock' . PHP_EOL;
+            break;
+        case false:
+            echo 'Total facture : ' . $sum . PHP_EOL;
+            break;
+        default:
+            break;
+    }
+}
+
+commande($facture);
