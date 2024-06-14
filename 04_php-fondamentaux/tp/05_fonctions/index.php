@@ -334,7 +334,7 @@ function afficherFacture($facture)
     foreach ($facture as $id => $item) {
         echo $id . '. ';
         foreach ($item as $key => $value) {
-            echo $key . ' : ' . $value . PHP_EOL.PHP_EOL;
+            echo $key . ' : ' . $value . PHP_EOL . PHP_EOL;
         }
     }
 }
@@ -385,10 +385,11 @@ function commande($facture)
     switch ($error) {
         case true:
             echo 'Erreur - commande supérieur au stock' . PHP_EOL;
-            break;
+            return 0;
         case false:
             echo 'Total facture : ' . $sum . PHP_EOL;
-            break;
+            return $sum;
+
         default:
             break;
     }
@@ -397,7 +398,7 @@ function commande($facture)
 // commande($facture);
 
 echo 'Choix : 1.Ajouter Article 2.Afficher Stock 3.Commande article -1 to exit : ' . PHP_EOL;
-
+$totalFacture = 0;
 do {
     $input = readline('Entrer choix : ');
 
@@ -410,7 +411,7 @@ do {
             break;
         case 3:
             if (!count($facture) < 1)
-                commande($facture);
+                $totalFacture += commande($facture);
             else
                 echo "Error no item in stock DB" . PHP_EOL;
             break;
@@ -418,3 +419,5 @@ do {
             break;
     }
 } while ($input != -1);
+
+echo 'Facture Totale commande : ' . $totalFacture . PHP_EOL;
