@@ -1,0 +1,53 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    color: rgb(247, 250, 253);
+    background-color: rgb(35, 47, 78);
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 1em;
+}
+
+table,
+th,
+td {
+    border: 2px solid rgb(68, 124, 156);
+    border-radius: 3px;
+}
+td{
+    padding: 1vw;
+}
+
+a {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+nav {
+    height: 5vh;
+    background-color: rgb(48, 64, 105);
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+nav>a {
+    font-size: 24px;
+    border: 2px solid rgb(68, 124, 156);
+    border-radius: 3px;
+
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
