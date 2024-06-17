@@ -67,8 +67,8 @@
         ],
         [
             'id' => 4,
-            'firstname' => 'debugName3',
-            'lastname' => 'debugLastName3',
+            'firstname' => 'debugName4',
+            'lastname' => 'debugLastName4',
             'email' => 'debug@debug.com',
             'title' => 'debugTitle',
             'description' => 'debugDescription',
@@ -85,8 +85,8 @@
         ],
         [
             'id' => 5,
-            'firstname' => 'debugName3',
-            'lastname' => 'debugLastName3',
+            'firstname' => 'debugName5',
+            'lastname' => 'debugLastName5',
             'email' => 'debug@debug.com',
             'title' => 'debugTitle',
             'description' => 'debugDescription',
@@ -103,8 +103,8 @@
         ],
         [
             'id' => 6,
-            'firstname' => 'debugName3',
-            'lastname' => 'debugLastName3',
+            'firstname' => 'debugName6',
+            'lastname' => 'debugLastName6',
             'email' => 'debug@debug.com',
             'title' => 'debugTitle',
             'description' => 'debugDescription',
@@ -121,8 +121,8 @@
         ],
         [
             'id' => 7,
-            'firstname' => 'debugName3',
-            'lastname' => 'debugLastName3',
+            'firstname' => 'debugName7',
+            'lastname' => 'debugLastName7',
             'email' => 'debug@debug.com',
             'title' => 'debugTitle',
             'description' => 'debugDescription',
@@ -139,8 +139,8 @@
         ],
         [
             'id' => 8,
-            'firstname' => 'debugName3',
-            'lastname' => 'debugLastName3',
+            'firstname' => 'debugName8',
+            'lastname' => 'debugLastName8',
             'email' => 'debug@debug.com',
             'title' => 'debugTitle',
             'description' => 'debugDescription',
@@ -160,6 +160,8 @@
     <header>
         <nav>
             <a href="#">Home</a>
+            <a href="#">Liste Alumni</a>
+            <a href="#">Statistiques</a>
         </nav>
     </header>
     <section class="container">
@@ -183,14 +185,20 @@
 
                                 <?php
                                 if (!is_array($stat)) {
-                                    echo '<p>' . $stat . '</p>';
-                                }
-                                ?>
-                                <?php
-                                if (is_array($stat)) {
+                                    if ($key == 'inSearch') {
+                                        if ($stat) {
+                                            echo '<p>Searching</p>';
+                                        } else {
+                                            echo '<p>Not searching</p>';
+                                        }
+                                    } else
+                                        echo '<p>' . $stat . '</p>';
+                                } else {
+                                    echo '<ul>';
                                     foreach ($stat as $value) {
-                                        echo '<p>' . $value . '</p>';
+                                        echo '<li><p>' . $value . '</p></li>';
                                     }
+                                    echo '</ul>';
                                 }
                                 ?>
 
