@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumni exo 14</title>
     <link rel="stylesheet" href="style.css">
+    <?php
+    require 'function.php';
+    ?>
 </head>
 
 <body>
@@ -18,7 +21,7 @@
             'email' => 'debug@debug.com',
             'title' => 'debugTitle',
             'description' => 'debugDescription',
-            'classOption' => 'debugOption',
+            'classOption' => 'Web',
             'classYear' => 'debugYear',
             'inSearch' => true,
             'currentCompany' => [
@@ -36,14 +39,14 @@
             'email' => 'debug@debug.com',
             'title' => 'debugTitle',
             'description' => 'debugDescription',
-            'classOption' => 'debugOption',
+            'classOption' => 'Web',
             'classYear' => 'debugYear',
             'inSearch' => true,
             'currentCompany' => [
                 'name' => 'debugCompany',
                 'linkedin' => 'debugLinkedin.com',
             ],
-            'location' => 'Montpellier',
+            'location' => 'Ah Ah',
             'skills' => ['debugSkill1', 'debugSkill2'],
             'socialLinks' => ['debugFacebook', 'debugTwitter']
         ],
@@ -54,14 +57,14 @@
             'email' => 'debug@debug.com',
             'title' => 'debugTitle',
             'description' => 'debugDescription',
-            'classOption' => 'debugOption',
+            'classOption' => 'Web',
             'classYear' => 'debugYear',
             'inSearch' => false,
             'currentCompany' => [
                 'name' => 'debugCompany',
                 'linkedin' => 'debugLinkedin.com',
             ],
-            'location' => 'Montpellier',
+            'location' => 'Tsutsu',
             'skills' => ['debugSkill1', 'debugSkill2'],
             'socialLinks' => ['debugFacebook', 'debugTwitter']
         ],
@@ -72,14 +75,14 @@
             'email' => 'debug@debug.com',
             'title' => 'debugTitle',
             'description' => 'debugDescription',
-            'classOption' => 'debugOption',
+            'classOption' => 'Starbuck',
             'classYear' => 'debugYear',
             'inSearch' => false,
             'currentCompany' => [
                 'name' => 'debugCompany',
                 'linkedin' => 'debugLinkedin.com',
             ],
-            'location' => 'Montpellier',
+            'location' => 'ty-7863',
             'skills' => ['debugSkill1', 'debugSkill2'],
             'socialLinks' => ['debugFacebook', 'debugTwitter']
         ],
@@ -90,14 +93,14 @@
             'email' => 'debug@debug.com',
             'title' => 'debugTitle',
             'description' => 'debugDescription',
-            'classOption' => 'debugOption',
+            'classOption' => 'Starbuck',
             'classYear' => 'debugYear',
             'inSearch' => false,
             'currentCompany' => [
                 'name' => 'debugCompany',
                 'linkedin' => 'debugLinkedin.com',
             ],
-            'location' => 'Montpellier',
+            'location' => 'gh-7542',
             'skills' => ['debugSkill1', 'debugSkill2'],
             'socialLinks' => ['debugFacebook', 'debugTwitter']
         ],
@@ -108,14 +111,14 @@
             'email' => 'debug@debug.com',
             'title' => 'debugTitle',
             'description' => 'debugDescription',
-            'classOption' => 'debugOption',
+            'classOption' => 'Design',
             'classYear' => 'debugYear',
             'inSearch' => false,
             'currentCompany' => [
                 'name' => 'debugCompany',
                 'linkedin' => 'debugLinkedin.com',
             ],
-            'location' => 'Montpellier',
+            'location' => 'gr-5623',
             'skills' => ['debugSkill1', 'debugSkill2'],
             'socialLinks' => ['debugFacebook', 'debugTwitter']
         ],
@@ -126,14 +129,14 @@
             'email' => 'debug@debug.com',
             'title' => 'debugTitle',
             'description' => 'debugDescription',
-            'classOption' => 'debugOption',
+            'classOption' => 'Design',
             'classYear' => 'debugYear',
             'inSearch' => false,
             'currentCompany' => [
                 'name' => 'debugCompany',
                 'linkedin' => 'debugLinkedin.com',
             ],
-            'location' => 'Montpellier',
+            'location' => 'df-789',
             'skills' => ['debugSkill1', 'debugSkill2'],
             'socialLinks' => ['debugFacebook', 'debugTwitter']
         ],
@@ -144,30 +147,34 @@
             'email' => 'debug@debug.com',
             'title' => 'debugTitle',
             'description' => 'debugDescription',
-            'classOption' => 'debugOption',
+            'classOption' => 'Design',
             'classYear' => 'debugYear',
             'inSearch' => false,
             'currentCompany' => [
                 'name' => 'debugCompany',
                 'linkedin' => 'debugLinkedin.com',
             ],
-            'location' => 'Montpellier',
+            'location' => 'SB-4589',
             'skills' => ['debugSkill1', 'debugSkill2'],
             'socialLinks' => ['debugFacebook', 'debugTwitter']
         ],
     ];
     ?>
     <header>
-        <nav>
-            <a href="#">Home</a>
+        <nav class="main_nav">
+            <a href="index.php">Home</a>
             <a href="#">Liste Alumni</a>
             <a href="#">Statistiques</a>
+            <a href="ajoutAlumni.php">Ajout Alumni</a>
         </nav>
     </header>
     <section class="container">
         <table>
             <tbody>
                 <?php
+                $percentage = 0;
+                $nbEnPoste = 0;
+                $specialityMap = [];
                 foreach ($alumnuses as $alumni) {
                     foreach ($alumni as $key => $value) {
                         echo '<th>' . $key . '</th>';
@@ -185,14 +192,19 @@
 
                                 <?php
                                 if (!is_array($stat)) {
-                                    if ($key == 'inSearch') {
+                                    if ($key == 'classOption') {
+                                        specialityCountMap($stat, $specialityMap);
+                                        echo '<p>' . $stat . '</p>';
+                                    } elseif ($key == 'inSearch') {
                                         if ($stat) {
                                             echo '<p>Searching</p>';
                                         } else {
                                             echo '<p>Not searching</p>';
+                                            $nbEnPoste++;
                                         }
-                                    } else
+                                    } else {
                                         echo '<p>' . $stat . '</p>';
+                                    }
                                 } else {
                                     echo '<ul>';
                                     foreach ($stat as $value) {
@@ -208,6 +220,25 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+    </section>
+    <section class="stats">
+        <p>
+            <?php
+            echo 'Nombre d\'alumni en poste : ' . (($nbEnPoste / count($alumnuses)) * 100) . ' % ';
+            ?>
+        </p>
+        <?php
+
+        foreach ($specialityMap as $key => $value) {
+
+            echo '<p>' . $key . ' : ' . $value . '</p>';
+        }
+        ?>
+    </section>
+    <section class="class_stats">
+        <?php
+        EmployedPerSpe($alumnuses);
+        ?>
     </section>
 </body>
 
