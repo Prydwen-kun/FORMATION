@@ -32,6 +32,7 @@ function EmployedPerSpe($alumnuses)
         $numberInposte = array_count_values($notInSearch);
 
         $percent = ($numberInposte[$key] / $total) * 100;
+        $percent = round($percent, 2);
         echo '<p>' . $key . ' : ' . $percent . ' % en poste</p>';
     }
     // print_r($numberInposte);

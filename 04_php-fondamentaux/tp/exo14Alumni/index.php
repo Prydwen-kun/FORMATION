@@ -158,6 +158,42 @@
             'skills' => ['debugSkill1', 'debugSkill2'],
             'socialLinks' => ['debugFacebook', 'debugTwitter']
         ],
+        [
+            'id' => 9,
+            'firstname' => 'debugName9',
+            'lastname' => 'debugLastName9',
+            'email' => 'debug@debug.com',
+            'title' => 'debugTitle',
+            'description' => 'debugDescription',
+            'classOption' => 'Starbuck',
+            'classYear' => 'debugYear',
+            'inSearch' => true,
+            'currentCompany' => [
+                'name' => 'debugCompany',
+                'linkedin' => 'debugLinkedin.com',
+            ],
+            'location' => 'ty-78756',
+            'skills' => ['debugSkill1', 'debugSkill2'],
+            'socialLinks' => ['debugFacebook', 'debugTwitter']
+        ],
+        [
+            'id' => 10,
+            'firstname' => 'debugName10',
+            'lastname' => 'debugLastName10',
+            'email' => 'debug@debug.com',
+            'title' => 'debugTitle',
+            'description' => 'debugDescription',
+            'classOption' => 'Design',
+            'classYear' => 'debugYear',
+            'inSearch' => true,
+            'currentCompany' => [
+                'name' => 'debugCompany',
+                'linkedin' => 'debugLinkedin.com',
+            ],
+            'location' => 'fr-48665',
+            'skills' => ['debugSkill1', 'debugSkill2'],
+            'socialLinks' => ['debugFacebook', 'debugTwitter']
+        ],
     ];
     ?>
     <header>
