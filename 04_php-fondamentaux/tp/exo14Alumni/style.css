@@ -58,6 +58,11 @@ nav {
     border: 2px solid rgb(68, 124, 156);
     border-radius: 3px;
     padding: 5px;
+    background-color: rgb(52, 87, 117);
+}
+
+.main_nav>a:hover {
+    background-color: rgb(90, 149, 201);
 }
 
 .container {
@@ -105,4 +110,59 @@ nav {
     border: 2px solid rgb(109, 75, 150);
     border-radius: 3px;
     padding: 10px;
+}
+
+.form_addStudent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    border: 2px solid rgb(90, 149, 201);
+    text-align: center;
+    gap: 10px;
+    padding: 20px 0;
+}
+
+label,
+input,
+span {
+    flex: 1 1 30%;
+}
+
+label {
+    text-align: right;
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+input {
+    font-size: 20px;
+    font-family: sans-serif;
+}
+
+
+span {
+    text-align: left;
+}
+
+input:invalid+span::after {
+    content: " ✖";
+}
+
+input:valid+span::after {
+    content: " ✓";
+}
+
+#submit_button {
+    width: min-content;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: rgb(52, 87, 117);
+    border-radius: 4px;
+    color: aliceblue;
+}
+
+#submit_button:hover {
+    background-color: rgb(90, 149, 201);
 }

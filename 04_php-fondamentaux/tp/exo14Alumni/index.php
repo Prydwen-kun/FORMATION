@@ -163,8 +163,8 @@
     <header>
         <nav class="main_nav">
             <a href="index.php">Home</a>
-            <a href="#">Liste Alumni</a>
-            <a href="#">Statistiques</a>
+            <a href="index.php">Liste Alumni</a>
+            <a href="index.php">Statistiques</a>
             <a href="ajoutAlumni.php">Ajout Alumni</a>
         </nav>
     </header>
