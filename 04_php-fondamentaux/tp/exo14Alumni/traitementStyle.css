@@ -1,0 +1,20 @@
+p{
+    background-color: rgb(52, 87, 117);
+    border: 2px solid rgb(79, 131, 177);
+    border-radius: 3px;
+    margin-top: 5px;
+    padding: 10px;
+    font-size: 20px;
+    font-family: sans-serif;
+    width: 400px;
+    text-wrap: wrap;
+}
+
+h2{
+    width: min-content;
+    text-wrap: nowrap; 
+}
+
+.container{
+    align-items: center;
+}
