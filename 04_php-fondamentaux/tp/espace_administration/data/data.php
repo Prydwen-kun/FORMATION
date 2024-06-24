@@ -8,7 +8,7 @@ $users =[
   ],
   [
     'id' => '1',
-    'name' => 'Steve',
+    'name' => 'Alex',
     'job' => 'Miner'
   ],
   [
@@ -18,7 +18,7 @@ $users =[
   ],
   [
     'id' => '3',
-    'name' => 'Steve',
+    'name' => 'Marc',
     'job' => 'Miner'
   ],
   [
@@ -28,7 +28,7 @@ $users =[
   ],
   [
     'id' => '5',
-    'name' => 'Steve',
+    'name' => 'Pierre',
     'job' => 'Miner'
   ],
   [
@@ -38,7 +38,7 @@ $users =[
   ],
   [
     'id' => '7',
-    'name' => 'Steve',
+    'name' => 'Sasha',
     'job' => 'Miner'
   ],
   [
@@ -48,7 +48,7 @@ $users =[
   ],
   [
     'id' => '9',
-    'name' => 'Steve',
+    'name' => 'Default',
     'job' => 'Miner'
   ],
   [
@@ -58,7 +58,7 @@ $users =[
   ],
   [
     'id' => '11',
-    'name' => 'Steve',
+    'name' => 'Sanglilol',
     'job' => 'Miner'
   ],
   [
@@ -73,6 +73,116 @@ $users =[
   ],
   [
     'id' => '14',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '15',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '16',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '17',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '18',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '19',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '20',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '21',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '22',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '23',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '24',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '25',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '26',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '27',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '28',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '29',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '30',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '31',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '32',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '33',
+    'name' => 'DEBUG',
+    'job' => 'DEBUGJob'
+  ],
+  [
+    'id' => '34',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '35',
+    'name' => 'Steve',
+    'job' => 'Miner'
+  ],
+  [
+    'id' => '36',
     'name' => 'Steve',
     'job' => 'Miner'
   ],

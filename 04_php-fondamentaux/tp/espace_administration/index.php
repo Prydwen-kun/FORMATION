@@ -2,6 +2,9 @@
 
 $title = 'index';
 $userListStart = 0;
+if(isset($_GET['listStart'])){
+    $userListStart = $_GET['listStart'];
+}
 $userListLength = 5;
 if (isset($_GET['listSize'])) {
     $userListLength = $_GET['listSize'];
