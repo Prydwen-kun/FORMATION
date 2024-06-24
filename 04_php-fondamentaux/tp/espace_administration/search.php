@@ -1,4 +1,8 @@
 <?php
+$title = 'Search';
+if(isset($_GET['search'])){
+    $title = $title.' '.$_GET['search'];
+}
 include 'inc/head.php';
 include 'data/data.php';
 

@@ -1,6 +1,11 @@
 <?php
-include 'inc/head.php';
 include 'data/data.php';
+$title = 'User';
+if (isset($_GET['userId'])) {
+    $title = $users[$_GET['userId']]['name'];
+}
+include 'inc/head.php';
+
 
 ?>
 <link rel="stylesheet" href="./css/index.css">
