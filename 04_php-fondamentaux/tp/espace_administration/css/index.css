@@ -1,0 +1,96 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.navButton {
+    display: block;
+    margin-left: 10px;
+}
+
+body {
+    color: rgb(247, 250, 253);
+    background-color: rgb(35, 47, 78);
+}
+
+header {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.container {
+    margin: 0 auto;
+    width: 80%;
+}
+
+table {
+    border-collapse: collapse;
+    text-align: center;
+    overflow: scroll;
+    margin: 0 auto;
+}
+
+table a {
+    border: 1px solid rgb(66, 138, 66);
+    border-radius: 3px;
+}
+
+table,
+th,
+td {
+    background-color: rgb(44, 59, 97);
+    border: 2px solid rgb(68, 124, 156);
+    border-radius: 3px;
+}
+
+th {
+    padding: 10px;
+}
+
+td {
+    padding: 5px 10px;
+}
+
+.optionContainer {
+    width: 80%;
+    margin: 20px auto;
+}
+
+.optionContainer>form {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.profilContainer {
+    width: 80%;
+    border: 2px solid white;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 40px auto;
+}
+
+.profilContainer>a {
+    border: 2px solid red;
+    border-radius: 3px;
+    margin: 10px;
+}
+
+/* input:invalid+span::after {
+    content: " ✖";
+}
+
+input:valid+span::after {
+    content: " ✓";
+} */

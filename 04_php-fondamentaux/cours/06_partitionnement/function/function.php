@@ -66,4 +66,3 @@ function speAlumni(array $alumnis) : array {
     return $emlpoyedInSpe;
   }
 
-?>
