@@ -31,8 +31,13 @@ function totalCart(array $cart)
     $listNumItem = array_count_values($listNames);
 
     foreach ($listNumItem as $key => $item) {
-        echo '<tr><th scope="row">' . $key . '</th><td> ' . $item . '</td></tr>';
+        echo '<tr><th scope="row">' . $key . '</th><td> ' . $item . '
+        </td>
+            <td>
+                <a href="?groupDelete=' . $key . '">X</a>
+            </td>
+        </tr>';
     }
 
-    echo '<tr class="table-primary"><th scope="row">Total : ' . $total . ' G<td></td></tr>';
+    echo '<tr class="table-primary"><th scope="row">Total : ' . $total . ' G<td></td><td></td></tr>';
 }

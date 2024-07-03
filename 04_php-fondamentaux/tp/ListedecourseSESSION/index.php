@@ -20,16 +20,30 @@ if (isset($_GET['cart_delete'])) {
     header("Location: index.php?delete=true");
 }
 
+if (isset($_GET['groupDelete'])) {
+    foreach($_SESSION['groceries_list'] as $key => $item){
+        if($item['name'] == $_GET['groupDelete']){
+            unset($_SESSION['groceries_list'][$key]);
+        }
+    }
+    
+    header("Location: index.php?delete=true");
+}
+
 
 
 ?>
-
+<header class="header">
+    <h1>Liste de course</h1>
+</header>
 <section class="container mt-5">
-    <form action="" method="" id="form1">
-        <input type="text">
+    <form action="" method="get" id="form1" class="mb-5 container">
+        <label for="name">Article</label>
+        <input type="text" name="name" id="name">
+        <label for="number">Quantité</label>
+        <input type="number" name="number" id="number">
         <input type="submit" class="submit" value="submit">
-        <button class="button">Button</button>
-        <div class="button"><a href="./log/logout.php" class="button my-2">Logout</a></div>
+        <a href="./log/logout.php" class="button my-2">Vider liste</a>
 
     </form>
     <div class="container">
@@ -75,6 +89,7 @@ if (isset($_GET['cart_delete'])) {
                         <tr>
                             <th>Article</th>
                             <th>Quantité</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>

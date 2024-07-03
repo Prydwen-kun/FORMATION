@@ -16,12 +16,19 @@ a:hover {
     background-color: rgb(11, 81, 141);
 }
 
-.button {
-    display: inline-block;
+.header {
+    margin: 0 auto;
+    width: 80%;
+    text-align: center;
 }
 
 .height50vh {
 
     max-height: 50vh;
     overflow-y: scroll;
+}
+
+#form1{
+    margin: 0 auto;
+    max-width: fit-content;
 }
