@@ -1,0 +1,27 @@
+body {
+    background-color: rgb(4, 28, 49);
+    color: rgb(242, 248, 253);
+}
+
+a {
+    color: rgb(242, 248, 253);
+    background-color: rgb(6, 46, 80);
+    border: 2px solid rgb(19, 110, 190);
+    border-radius: 3px;
+    text-decoration: none;
+    padding: 5px;
+}
+
+a:hover {
+    background-color: rgb(11, 81, 141);
+}
+
+.button {
+    display: inline-block;
+}
+
+.height50vh {
+
+    max-height: 50vh;
+    overflow-y: scroll;
+}
