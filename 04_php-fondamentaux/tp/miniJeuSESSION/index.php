@@ -28,6 +28,7 @@ if (!isset($_SESSION['mystere']) || $newGame) {
 <section class="container mt-5">
     <!-- <p>Nombre mystere = $_SESSION['mystere'] </p> -->
     <a href="?newGame=true">Nouvelle partie</a>
+    <a href="logout.php?status=quit">Log out</a>
     <div class="container mt-5">
         <form action="" method="get" class="form">
             <label for="input1">Devinez un nombre : </label>
