@@ -1,11 +1,10 @@
 <?php
 $currentPage = "Logout";
+
+if (session_status() === PHP_SESSION_NONE) session_start();
+
 include "../inc/head.php";
 
-session_start();
-if (isset($_SESSION['storyIndex'])) {
-    unset($_SESSION['storyIndex']);
-}
 $_SESSION = [];
 session_destroy();
 
