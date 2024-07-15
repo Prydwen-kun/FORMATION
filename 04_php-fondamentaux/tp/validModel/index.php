@@ -1,10 +1,11 @@
 <?php
-$currentPage = "Le livre dont vous êtes le héros";
+$currentPage = "index";
 
 include "inc/head.php";
 
 include "data/data.php";
-include "function/function.php";
+include "lib/utils/function.php";
+include "lib/_helpers/tools.php";
 
 session_start();
 if (!isset($_SESSION['storyIndex'])) {
@@ -15,13 +16,14 @@ if (!isset($_SESSION['storyIndex'])) {
 
 
 ?>
-<header class="header mt-3">
-    
+<header class="">
+    header
 </header>
-<section class="container mt-5">
-   
+<section class="container">
+   section
 </section>
 
 <?php
+debug($currentPage);
 include "inc/foot.php";
 ?>

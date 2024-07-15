@@ -3,7 +3,7 @@
 function debug(...$var)
 {
 
-    echo '<p>';
+    echo '<div class="container mt-5">';
     var_dump(...$var);
-    echo '</p>';
+    echo '</div>';
 }
