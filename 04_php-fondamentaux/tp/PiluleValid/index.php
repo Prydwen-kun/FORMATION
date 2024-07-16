@@ -33,18 +33,22 @@ if (!isset($_SESSION['ticketGagnant'])) {
         <h1 class="title">Tombola</h1>
     </a>
     <div id="shadowBox"> <a href="?cheat=true" class="scam">->Get Money<-</a></div>
-   
+
 </header>
 <section class="container">
     <form action="?buy=true" method="post" id="form1" class="form-inline">
         <div class="form-group">
             <label for="nbTicket" class="mt-3">Nombre ticket</label>
             <input type="number" min="1" max="100" class="form-control mt-3" id="nbTicket" name="ticket" placeholder="">
-
+            <button type="submit" class="btn btn-primary mt-3">Acheter</button>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Acheter</button>
-        <a href="?reset=true" class="btn btn-primary mt-3">Reset Tombola</a>
-        <a href="?tirage=true" class="btn btn-primary mt-3">Tirage !!!</a>
+        <div class="form-group">
+
+            <a href="?reset=true" class="btn btn-primary mt-3">Reset Tombola</a>
+            <a href="?tirage=true" class="btn btn-primary mt-3">Tirage !!!</a>
+            <a href="./log/logout.php" class="btn btn-warning mt-3">EXIT</a>
+        </div>
+
     </form>
 </section>
 <section class="container">
@@ -76,6 +80,6 @@ if (!isset($_SESSION['ticketGagnant'])) {
 </section>
 
 <?php
-
+session_write_close();
 include "inc/foot.php";
 ?>
