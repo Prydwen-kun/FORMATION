@@ -76,8 +76,6 @@ if (!isset($_SESSION['ticketGagnant'])) {
 </section>
 
 <?php
-debug($_SESSION['ticketGagnant']);
-debug($_SESSION['ticketMap']);
-debug($_SESSION['achat']);
+
 include "inc/foot.php";
 ?>
