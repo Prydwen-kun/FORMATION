@@ -1,0 +1,11 @@
+C:\xampp\htdocs\FORMATION\Rust\01_Rust\Rust_01\target\debug\deps\libgetrandom-7aa46780f2bd4406.rmeta: C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src/lib.rs C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\error.rs C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\util.rs C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\error_impls.rs C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\windows.rs
+
+C:\xampp\htdocs\FORMATION\Rust\01_Rust\Rust_01\target\debug\deps\libgetrandom-7aa46780f2bd4406.rlib: C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src/lib.rs C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\error.rs C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\util.rs C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\error_impls.rs C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\windows.rs
+
+C:\xampp\htdocs\FORMATION\Rust\01_Rust\Rust_01\target\debug\deps\getrandom-7aa46780f2bd4406.d: C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src/lib.rs C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\error.rs C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\util.rs C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\error_impls.rs C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\windows.rs
+
+C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src/lib.rs:
+C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\error.rs:
+C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\util.rs:
+C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\error_impls.rs:
+C:\Users\yolo\.cargo\registry\src\index.crates.io-6f17d22bba15001f\getrandom-0.2.15\src\windows.rs:
