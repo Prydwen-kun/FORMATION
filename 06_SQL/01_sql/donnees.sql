@@ -157,3 +157,125 @@ FROM
     employe
 WHERE
     dateContrat IN ('2016-01-01', '2022-01-01');
+
+-- LIKE
+SELECT
+    nom,
+    prenom
+FROM
+    employe
+WHERE
+    nom LIKE 'T%';
+
+SELECT
+    nom,
+    prenom,
+    salaire
+FROM
+    employe
+WHERE
+    salaire LIKE '_0%';
+
+-- AND
+SELECT
+    nom,
+    prenom,
+    salaire
+FROM
+    employe
+WHERE
+    sexe = 'F'
+    AND salaire > 2000;
+
+-- OR
+SELECT
+    nom,
+    prenom,
+    salaire
+FROM
+    employe
+WHERE
+    sexe = 'F'
+    OR salaire > 2000;
+
+-- + - * / %
+SELECT
+    nom,
+    prenom,
+    salaire
+FROM
+    employe
+WHERE
+    salaire * 12 < 25000;
+
+-- CONCAT()
+SELECT
+    CONCAT (`nom`, '', `prenom`)
+FROM
+    `employe`;
+
+-- AS (ALIAS)
+SELECT
+    CONCAT (`nom`, ' ', `prenom`) AS `nomComplet`
+FROM
+    `employe`;
+
+SELECT
+    CONCAT (`nom`, ' ', `prenom`) `nomComplet`
+FROM
+    `employe`;
+
+-- ALIAS ne fonctionne pas avec le WHERE
+SELECT
+    CONCAT (nom, ' ', prenom) AS nomComplet
+FROM
+    employe
+WHERE
+    nomComplet LIKE 'R%';
+
+-- ALIAS fonctionne avec le HAVING
+SELECT
+    CONCAT (nom, ' ', prenom) AS nomComplet
+FROM
+    employe
+HAVING
+    nomComplet LIKE 'R%';
+
+-- ORDER BY
+SELECT
+    `nom`,
+    `prenom`
+FROM
+    `employe`
+ORDER BY
+    `nom`;
+
+-- ORDER BY ASC
+SELECT
+    `nom`,
+    `prenom`
+FROM
+    `employe`
+ORDER BY
+    `nom` ASC;
+
+-- ORDER BY DESC
+SELECT
+    `nom`,
+    `prenom`,
+    `salaire`
+FROM
+    `employe`
+ORDER BY
+    `salaire` DESC;
+
+-- 
+SELECT
+    `nom`,
+    `prenom`
+FROM
+    `employe`
+ORDER BY
+    `nom`,
+    `prenom`;
+    
