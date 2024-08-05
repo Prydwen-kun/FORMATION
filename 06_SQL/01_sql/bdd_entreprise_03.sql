@@ -151,14 +151,11 @@ ORDER BY
 -- 10
 SELECT
     service.nom,
-    nbs.nb
+    COUNT(*) AS nb
 FROM
     service
-    CROSS JOIN (
-        SELECT
-            COUNT(*) nb
-        FROM
-            employe
-    ) AS nbs
+    LEFT JOIN employe USING (idService)
+GROUP BY
+    service.nom
 ORDER BY
     service.nom ASC;

@@ -11,7 +11,7 @@ SELECT employe.nom, employe.prenom, service.nom nomService FROM `employe`, `serv
 SELECT `employe`.`nom`, `employe`.`prenom`, `service`.`nom` `nomService` 
 FROM `employe`
 INNER JOIN `service`
-ON `employe`.`idService` = `ervice`.`idService`;
+ON `employe`.`idService` = `service`.`idService`;
 
 -- on peut intervertir l'odre du nom des tables pour from et join mais seulement pour les jointures internes
 SELECT `employe`.`nom`, `employe`.`prenom`, `service`.`nom` `nomService` 
