@@ -116,9 +116,9 @@ FROM
     JOIN message ON m_conversation_fk = c_id
     JOIN user ON m_auteur_fk = u_id
 WHERE
-    EXISTS (
+    c_id IN (
         SELECT
-            *
+            c_id
         FROM
             conversation
             JOIN message ON c_id = m_conversation_fk
@@ -126,32 +126,33 @@ WHERE
         WHERE
             u_id = 8
     )
+GROUP BY
+    u_id
 ORDER BY
-    c_id;
+    u_id;
 
 -- 10
 SELECT
     c_id AS convo_id,
     u_id AS user_id,
     u_login AS user_login,
-    (
-        SELECT
-            COUNT(*)
-        FROM
-            conversation
-            JOIN message ON m_conversation_fk = c_id
-            JOIN user ON m_auteur_fk = u_id
-        WHERE
-            m_conversation_fk = c_id
-    ) AS Total_message
 FROM
     conversation
-    LEFT JOIN message ON m_conversation_fk = c_id
-    LEFT JOIN user ON m_auteur_fk = u_id
+    JOIN message ON m_conversation_fk = c_id
+    JOIN user ON m_auteur_fk = u_id
 GROUP BY
     user_id
 ORDER BY
-    convo_id ASC;
+    convo_id,
+    user_id ASC
+UNION
+SELECT
+    COUNT(*)
+FROM
+    message
+    JOIN user ON m_auteur_fk = u_id
+GROUP BY
+    u_id;
 
 -- 11
 SELECT
