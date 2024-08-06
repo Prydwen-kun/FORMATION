@@ -108,24 +108,16 @@ ORDER BY
 
 -- 9
 SELECT
-    c_id AS convo_id,
     u_id AS user_id,
-    u_login AS user_login
+    u_login AS user_login,
+    c_id AS convo_id
+    -- COUNT(*) AS Total_message
 FROM
-    conversation
-    JOIN message ON c_id = m_conversation_fk
-    JOIN user ON m_auteur_fk = u_id
-WHERE
-    m_auteur_fk = 10
-    AND m_conversation_fk = (
-        SELECT
-            m_conversation_fk
-        FROM
-            message
-            JOIN conversation ON m_conversation_fk = c_id
-        WHERE
-            m_auteur_fk = 10
-    )
+    user
+    JOIN message ON u_id = m_auteur_fk
+    JOIN conversation ON m_conversation_fk = c_id
+GROUP BY
+    user_id
 ORDER BY
     c_id ASC;
 
@@ -143,3 +135,5 @@ GROUP BY
     user_id
 ORDER BY
     user_id ASC;
+
+-- 11
