@@ -107,12 +107,27 @@ ORDER BY
     convo_date DESC;
 
 -- 9
-SELECT
-    m_auteur_fk AS user_id
-    u_login AS user_login
+SELECT DISTINCT
+    u_id AS user_id,
+    u_login AS user_login,
+    c_id AS convo_id
 FROM
-    message LEFT JOIN user ON m_auteur_fk = u_id
+    conversation
+    JOIN message ON c_id = m_conversation_fk
+    JOIN user ON m_auteur_fk = u_id
 WHERE
- 
+    c_id = 10
 ORDER BY
-    convo_id DESC;
+    user_id ASC;
+
+-- 10
+SELECT
+    c_id AS convo_id,
+    u_login AS user_login,
+    m_id AS message_id
+FROM
+    conversation
+    JOIN message ON c_id = m_conversation_fk
+    JOIN user ON m_auteur_fk = u_id
+WHERE
+    c_id = 5
