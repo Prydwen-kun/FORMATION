@@ -136,6 +136,16 @@ SELECT
     c_id AS convo_id,
     u_id AS user_id,
     u_login AS user_login,
+    COUNT(
+        SELECT
+            *
+        FROM
+            conversation
+            JOIN message ON m_conversation_fk = c_id
+            JOIN user ON m_auteur_fk = u_id
+        GROUP BY
+            u_id
+    ) AS Total_message
 FROM
     conversation
     JOIN message ON m_conversation_fk = c_id
@@ -144,15 +154,7 @@ GROUP BY
     user_id
 ORDER BY
     convo_id,
-    user_id ASC
-UNION
-SELECT
-    COUNT(*)
-FROM
-    message
-    JOIN user ON m_auteur_fk = u_id
-GROUP BY
-    u_id;
+    user_id ASC;
 
 -- 11
 SELECT
@@ -201,10 +203,14 @@ ORDER BY
 
 -- 14
 SELECT
+    m_id,
     m_contenu AS Contenu_Message,
     m_date AS message_date,
     r_libelle,
-    u_login
+    u_id,
+    u_login,
+    u_prenom,
+    u_nom
 FROM
     message
     JOIN user ON u_id = m_auteur_fk
@@ -220,9 +226,24 @@ LIMIT
 
 -- 15
 SELECT
+    m_id,
     m_contenu AS message_contenu,
-    user_login
+    m_date,
+    m_auteur_fk,
+    m_conversation_fk
 FROM
     conversation
     JOIN message ON m_conversation_fk = c_id
     JOIN user ON m_auteur_fk = u_id
+WHERE
+    m_date > (
+        SELECT
+            MAX(m_date)
+        FROM
+            message
+        WHERE
+            m_auteur_fk = 88
+    );
+
+-- 
+-- dernier message de 88
