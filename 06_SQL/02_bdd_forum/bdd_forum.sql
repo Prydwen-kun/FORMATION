@@ -107,33 +107,121 @@ ORDER BY
     convo_date DESC;
 
 -- 9
-SELECT
+SELECT DISTINCT
+    c_id AS convo_id,
     u_id AS user_id,
-    u_login AS user_login,
-    c_id AS convo_id
-    -- COUNT(*) AS Total_message
+    u_login
 FROM
-    user
-    JOIN message ON u_id = m_auteur_fk
-    JOIN conversation ON m_conversation_fk = c_id
-GROUP BY
-    user_id
+    conversation
+    JOIN message ON m_conversation_fk = c_id
+    JOIN user ON m_auteur_fk = u_id
+WHERE
+    EXISTS (
+        SELECT
+            *
+        FROM
+            conversation
+            JOIN message ON c_id = m_conversation_fk
+            JOIN user ON m_auteur_fk = u_id
+        WHERE
+            u_id = 8
+    )
 ORDER BY
-    c_id ASC;
+    c_id;
 
 -- 10
 SELECT
+    c_id AS convo_id,
     u_id AS user_id,
     u_login AS user_login,
-    c_id AS convo_id,
-    COUNT(*) AS Total_message
+    (
+        SELECT
+            COUNT(*)
+        FROM
+            conversation
+            JOIN message ON m_conversation_fk = c_id
+            JOIN user ON m_auteur_fk = u_id
+        WHERE
+            m_conversation_fk = c_id
+    ) AS Total_message
 FROM
-    user
-    JOIN message ON u_id = m_auteur_fk
-    JOIN conversation ON m_conversation_fk = c_id
+    conversation
+    LEFT JOIN message ON m_conversation_fk = c_id
+    LEFT JOIN user ON m_auteur_fk = u_id
 GROUP BY
     user_id
 ORDER BY
-    user_id ASC;
+    convo_id ASC;
 
 -- 11
+SELECT
+    m_contenu,
+    m_date
+FROM
+    message
+    LEFT JOIN conversation ON m_conversation_fk = c_id
+WHERE
+    m_date < c_date
+ORDER BY
+    m_date ASC;
+
+-- 12
+SELECT
+    u_id AS user_id,
+    u_login AS user_login
+FROM
+    user
+    JOIN message ON m_auteur_fk = u_id
+    JOIN conversation ON m_conversation_fk = c_id
+WHERE
+    c_termine != 0
+GROUP BY
+    u_id
+ORDER BY
+    u_id ASC;
+
+-- 13
+SELECT
+    r_libelle AS Rank,
+    u_login AS user_login,
+    m_contenu AS message_contenu,
+    u_date_inscription AS inscription
+FROM
+    conversation
+    JOIN message ON m_conversation_fk = c_id
+    JOIN user ON m_auteur_fk = u_id
+    JOIN rang ON u_rang_fk = r_id
+WHERE
+    r_libelle = 'admin'
+    AND u_date_inscription LIKE '2010%'
+    AND c_termine = 0
+ORDER BY
+    u_date_inscription ASC;
+
+-- 14
+SELECT
+    m_contenu AS Contenu_Message,
+    m_date AS message_date,
+    r_libelle,
+    u_login
+FROM
+    message
+    JOIN user ON u_id = m_auteur_fk
+    JOIN rang ON u_rang_fk = r_id
+WHERE
+    r_libelle = 'none'
+    AND TIMESTAMPDIFF (YEAR, u_date_naissance, CURRENT_DATE()) < 18
+    AND m_contenu LIKE '%o%o%o%'
+ORDER BY
+    RAND ()
+LIMIT
+    5;
+
+-- 15
+SELECT
+    m_contenu AS message_contenu,
+    user_login
+FROM
+    conversation
+    JOIN message ON m_conversation_fk = c_id
+    JOIN user ON m_auteur_fk = u_id
