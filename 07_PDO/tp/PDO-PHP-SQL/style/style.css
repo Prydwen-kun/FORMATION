@@ -44,6 +44,7 @@ header {
 }
 
 footer {
+  margin-top: 10vh;
   width: 100%;
   text-align: center;
 }
@@ -66,4 +67,72 @@ footer {
 }
 .dash-header a:hover {
   background-color: rgb(189, 0, 0);
+}
+
+.dash-list-container {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.list-table {
+  border: 1px solid rgb(184, 184, 184);
+  width: 100%;
+  background-color: rgb(76, 122, 160);
+  border-collapse: collapse;
+}
+.list-table th {
+  border: 1px solid rgb(184, 184, 184);
+}
+.list-table td {
+  border: 1px solid rgb(184, 184, 184);
+  padding: 10px;
+  text-align: center;
+}
+.list-table a {
+  text-decoration: none;
+  color: aliceblue;
+  background-color: rgb(117, 0, 0);
+  border: 1px solid red;
+  border-radius: 3px;
+  padding: 5px;
+}
+.list-table a:hover {
+  background-color: rgb(189, 0, 0);
+}
+.rights-list {
+  margin-top: 40px;
+  font-size: 24px;
+}
+.rights-list > p {
+  display: inline;
+}
+
+.form-add-user {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid rgb(76, 122, 160);
+  padding: 10px;
+  gap: 10px;
+}
+.form-add-user > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.form-add-user > div > button {
+  color: white;
+  background-color: rgb(127, 159, 219);
+  width: min-content;
+  margin: 0 auto;
+  text-wrap: nowrap;
+  height: 40px;
+  font-size: 22px;
+  border-radius: 10px;
+}
+.form-add-user > div > button:hover {
+  background-color: rgb(152, 188, 255);
 }

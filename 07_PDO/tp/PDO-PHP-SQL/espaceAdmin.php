@@ -18,13 +18,25 @@ if (isset($_POST['userID'], $_POST['password'])) {
 
     try {
         $dbh = new PDO($dsn, $dbUser, $dbPwd, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-        $query = "SELECT * FROM user WHERE email = :u_id";
+        $query = "SELECT * 
+        FROM user 
+        JOIN role ON user.r_id = role.r_id 
+        JOIN possede ON role.r_id = possede.r_id 
+        JOIN autorisation ON possede.autorisation_id = autorisation.autorisation_id 
+        WHERE email = :u_id";
 
         if (($req = $dbh->prepare($query))) {
             if (($req->bindValue(':u_id', $u_id))) {
                 if ($req->execute()) {
-                    $res = $req->fetch(PDO::FETCH_ASSOC);
-                    var_dump($res);
+
+
+                    $res_with_rights = $req->fetchAll(PDO::FETCH_ASSOC);
+                    $res = $res_with_rights[0]; //$req->fetch(PDO::FETCH_ASSOC);
+
+                    $rights = extractRights($res_with_rights);
+
+                    // var_dump($res_with_rights);
+                    // var_dump($res);
                 } else {
                     echo 'Erreur requête !';
                 }
@@ -35,6 +47,9 @@ if (isset($_POST['userID'], $_POST['password'])) {
             if ($u_id == $res['email'] && $password == $res['password']) {
                 $_SESSION['connected'] = true;
                 $_SESSION['u_id'] = $u_id;
+                $_SESSION['rank'] = $res['r_id'];
+                $_SESSION['rights'] = $rights;
+                // var_dump($_SESSION['rights']);
             } else {
                 header("Location: index.php?login=false");
             }
@@ -44,8 +59,24 @@ if (isset($_POST['userID'], $_POST['password'])) {
     } catch (PDOException $e) {
         die($e->getMessage());
     }
+} elseif (isset($_SESSION['connected']) && $_SESSION['connected'] == true) {
+    $dbh = new PDO($dsn, $dbUser, $dbPwd, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 } else {
     header("Location: index.php?error=403");
+}
+
+//ADD USER
+if (isset($_GET['add_user']) && $_GET['add_user'] == 'true') {
+    if (!empty($_POST) && isset($_POST['addLogin'])) {
+        $email_add = $_POST['addLogin'];
+        $password_add = $_POST['addPassword'];
+        $r_id_add = $_POST['addRank'];
+        addUser($dbh, $email_add, $password_add, $r_id_add);
+    }
+}
+
+if (isset($_SESSION['u_id'])) {
+    $userLogin = $_SESSION['u_id'];
 }
 
 ?>
@@ -58,30 +89,81 @@ if (isset($_POST['userID'], $_POST['password'])) {
         //QUERY
         if (isset($_SESSION['connected'], $_SESSION['u_id']) && $_SESSION['connected']) {
 
-            echo $u_id . ' connected !';
+            echo $userLogin . ' connected !';
         }
         ?>
     </p>
 </header>
-<section>
-    <table>
+<section class="dash-list-container">
+    <table class="list-table">
         <tbody>
             <?php
-            $users = listUsers($dsn, $dbUser, $dbPwd, 5);
+            $users = listUsers($dbh, 5);
+
+            echo '<th>u_id</th>
+                <th>login</th>
+                <th>rank</th>
+                <th>action</th>';
+
             foreach ($users as $key => $user) {
                 echo '<tr>';
-                foreach ($user as $value) {
-                    foreach ($value as $data) {
-                        echo '<td>';
-                        var_dump($data);
-                        echo '</td>';
+                $tempUserId = 0;
+                foreach ($user as $key => $value) {
+                    if ($key == 'password' || $key == 'r_id' || $key == 'autorisation_id' || $key == 'autorisation_label') {
+                        continue;
+                    }
+                    echo '<td>' . $value . '</td>';
+
+                    if ($key == 'u_id') {
+                        $tempUserId = $value;
                     }
                 }
-                echo '</tr>';
+
+                echo '<td><a href="?user_id=' . $tempUserId . '">SUPPRIMER</a></td></tr>';
             }
             ?>
         </tbody>
     </table>
+    <div class="rights-list">Vous avez les droits suivant :
+        <?php
+        if (isset($_SESSION['rights'])) {
+            foreach ($_SESSION['rights'] as $right) {
+                echo '<p> ' . $right . ', </p>';
+            }
+        }
+
+        ?>
+    </div>
+
+    <form action="?add_user=true" method="post" class="form-add-user">
+        <div>
+            <label for="addLogin">Username or email : </label>
+            <label for="addPassword">Password : </label>
+            <label for="addRank">Rank : </label>
+
+        </div>
+        <div>
+            <input type="text" name="addLogin" id="addLogin">
+            <input type="password" name="addPassword" id="addPassword">
+            <select name="addRank" id="addRank">
+                <?php
+
+                $rankList = listRank($dbh);
+                foreach ($rankList as $value) {
+                    foreach ($value as $key => $data) {
+                        if ($key == 'r_label') {
+                            echo '<option value="' . $value['r_id'] . '">' . $data . '</option>';
+                        }
+                    }
+                }
+                ?>
+
+            </select>
+        </div>
+        <div>
+            <button type="submit">Add User</button>
+        </div>
+    </form>
 </section>
 
 <?php
