@@ -1,0 +1,69 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  color: white;
+  background-color: rgb(4, 61, 107);
+}
+
+header {
+  width: 100%;
+  font-size: 32px;
+  padding: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+}
+.form-container {
+  width: 100%;
+}
+
+.loginForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  gap: 10px;
+}
+#loginButton {
+  color: white;
+  background-color: rgb(59, 81, 129);
+  padding: 5px 10px;
+  font-size: 20px;
+}
+#loginButton:hover {
+  background-color: rgb(77, 106, 168);
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+}
+
+/* CSS FOR ESPACE ADMIN */
+
+.dash-header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.dash-header a {
+  text-decoration: none;
+  color: aliceblue;
+  background-color: rgb(117, 0, 0);
+  border: 1px solid red;
+  border-radius: 3px;
+}
+.dash-header a:hover {
+  background-color: rgb(189, 0, 0);
+}
