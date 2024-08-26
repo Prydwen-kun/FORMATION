@@ -164,8 +164,9 @@ function updateUser($dbh, string $userToUpdateID, string $email, string $passwor
     }
 }
 
-function addRank($dbh, $rankLabel)
+function addRank($dbh, $rankLabel, $rightsList)
 {
+    //insert new rank
     try {
         $query = "INSERT INTO role 
         VALUES(DEFAULT,:rankLabel)";
@@ -175,6 +176,7 @@ function addRank($dbh, $rankLabel)
                 ($req->bindValue(':rankLabel', $rankLabel))
             ) {
                 if ($req->execute()) {
+                    $insertID = $dbh->lastInsertId();
                 } else {
                     echo 'Erreur requête !';
                 }
@@ -185,6 +187,39 @@ function addRank($dbh, $rankLabel)
             echo 'Request prepare error !';
         }
     } catch (PDOException $e) {
+    }
+
+    //link new rank with rights
+    foreach ($rightsList as $right) {
+        foreach ($right as $key => $value) {
+            foreach ($_POST as $post_key => $post_value) {
+                if ($value == $post_key && $post_value) {
+
+                    try {
+                        $query = "INSERT INTO possede 
+                        VALUES(:autorisation_id,:r_id)";
+
+                        if (($req = $dbh->prepare($query))) {
+                            if (
+                                ($req->bindValue(':autorisation_id', $right['autorisation_id']))
+                                && ($req->bindValue(':r_id', $insertID))
+
+                            ) {
+                                if ($req->execute()) {
+                                } else {
+                                    echo 'Erreur requête !';
+                                }
+                            } else {
+                                echo 'Value bind error !';
+                            }
+                        } else {
+                            echo 'Request prepare error !';
+                        }
+                    } catch (PDOException $e) {
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -14,11 +14,17 @@ if (isset($_SESSION['connected']) && $_SESSION['connected'] == true) {
     header("Location: index.php?error=403");
 }
 
+// list rank
+$rankList = listRank($dbh);
+// list right -->
+$rightsList = listRights($dbh);
+
 // ADD RANK
 if (isset($_GET['add_rank']) && $_GET['add_rank'] == 'true') {
     if (!empty($_POST) && isset($_POST['addRank'])) {
         $rankLabel = $_POST['addRank'];
-        addRank($dbh, $rankLabel);
+
+        addRank($dbh, $rankLabel, $rightsList);
     }
 }
 ?>
@@ -50,7 +56,7 @@ if (isset($_GET['add_rank']) && $_GET['add_rank'] == 'true') {
         </tbody>
     </table>
     <form action="?add_rank=true" method="post" class="form-add-user" id="rankForm">
-        <div class="labelFormDiv"><?php $rightsList = listRights($dbh); ?>
+        <div class="labelFormDiv">
             <label for="addRank" id="rankLabelInput">Rank name : </label>
             <?php foreach ($rightsList as $right): ?>
                 <label for="<?= $right['autorisation_label'] ?>"><?= $right['autorisation_label'] ?></label>
