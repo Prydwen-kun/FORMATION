@@ -77,6 +77,8 @@ function listRank($dbh): array
 
 function addUser($dbh, string $email, string $password, int $r_id)
 {
+    //filter blank field and invalid password
+    
     try {
         $query = "INSERT INTO user 
         VALUES(DEFAULT,:email,:password,:r_id)";
@@ -131,5 +133,5 @@ function deleteUser($dbh, string $userToDeleteID)
 
 function updateUser($dbh, string $userToUpdateID, string $email,string $password,$rank){
 //filter blank field and modify only
- 
+
 }

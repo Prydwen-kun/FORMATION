@@ -144,6 +144,21 @@ footer {
 .form-add-user > div > button:hover {
   background-color: rgb(152, 188, 255);
 }
+.form-add-user > div > a{
+  text-decoration: none;
+  color: aliceblue;
+  background-color: rgb(127, 159, 219);
+  margin: 0 auto;
+  text-wrap: nowrap;
+  height: 40px;
+  font-size: 22px;
+  border-radius: 10px;
+  border: 2px solid rgb(59, 59, 59);
+  padding: 5px;
+}
+.form-add-user > div > a:hover{
+  background-color: rgb(152, 188, 255);
+}
 
 .userDelete {
   position: fixed;

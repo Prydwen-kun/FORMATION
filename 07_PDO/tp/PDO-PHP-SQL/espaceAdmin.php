@@ -241,7 +241,7 @@ if (isset($_SESSION['u_id'])) {
             </div>
             <div>
                 <button type="submit">Modifier</button>
-                <a href="?form=add">Add user</a>
+                <a href="?form=add">Back to Add</a>
             </div>
         </form>
     <?php endif; ?>
