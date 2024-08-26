@@ -75,7 +75,7 @@ function listRank($dbh): array
     }
 }
 
-function addUser($dbh, $email, $password, $r_id)
+function addUser($dbh, string $email, string $password, int $r_id)
 {
     try {
         $query = "INSERT INTO user 
@@ -88,16 +88,48 @@ function addUser($dbh, $email, $password, $r_id)
                 ($req->bindValue(':r_id', $r_id))
             ) {
                 if ($req->execute()) {
-                    
                 } else {
                     echo 'Erreur requête !';
                 }
             } else {
-                echo 'Value bind error !';  
+                echo 'Value bind error !';
             }
         } else {
-            echo 'Request prepare error !'; 
+            echo 'Request prepare error !';
         }
     } catch (PDOException $e) {
     }
+}
+
+function deleteUser($dbh, string $userToDeleteID)
+{
+    if ($_SESSION['rank'] == 1 && $userToDeleteID != 2) {
+        try {
+            $query = "DELETE FROM user 
+            WHERE u_id = :u_id_to_delete";
+
+            if (($req = $dbh->prepare($query))) {
+                if (
+                    ($req->bindValue(':u_id_to_delete', $userToDeleteID))
+                ) {
+                    if ($req->execute()) {
+                        echo '<div class="userDelete"><p>User ' . $userToDeleteID . ' has been deleted !</p></div>';
+                    } else {
+                        echo 'Erreur requête !';
+                    }
+                } else {
+                    echo 'Value bind error !';
+                }
+            } else {
+                echo 'Request prepare error !';
+            }
+        } catch (PDOException $e) {
+            echo '<div class="userDelete"><p>An error has occured when trying to delete User ' . $userToDeleteID . ' !</p></div>';
+        }
+    }
+}
+
+function updateUser($dbh, string $userToUpdateID, string $email,string $password,$rank){
+//filter blank field and modify only
+ 
 }

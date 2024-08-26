@@ -5,6 +5,7 @@ include_once "include/header.php";
 require_once "function/function.php";
 
 
+
 $dsn = 'mysql:host=localhost;dbname=espaceadmin;charset=utf8';
 $dbUser = 'root';
 $dbPwd = '';
@@ -67,11 +68,47 @@ if (isset($_POST['userID'], $_POST['password'])) {
 
 //ADD USER
 if (isset($_GET['add_user']) && $_GET['add_user'] == 'true') {
-    if (!empty($_POST) && isset($_POST['addLogin'])) {
+    if (!empty($_POST) && isset($_POST['addLogin']) && isset($_POST['addPassword']) && isset($_POST['addRank'])) {
         $email_add = $_POST['addLogin'];
         $password_add = $_POST['addPassword'];
         $r_id_add = $_POST['addRank'];
         addUser($dbh, $email_add, $password_add, $r_id_add);
+    }
+}
+
+//DELETE USER
+if (isset($_GET['action']) && $_GET['action'] == 'delete') {
+    deleteUser($dbh, $_GET['user_id']);
+}
+
+//UPDATE USER meme div de debug que delete thx
+if (isset($_GET['action']) && $_GET['action'] == 'update') {
+    $_SESSION['form_mode'] = 'update';
+    // updateUser($dbh, $_GET['user_id']);
+}
+//gere le flag form_mode pour changer le form de add à modif
+if (!isset($_SESSION['form_mode'])) {
+    $_SESSION['form_mode'] = 'addUser';
+    $form_mode = $_SESSION['form_mode'];
+} elseif (isset($_GET['form']) && $_GET['form'] == 'add') {
+    $_SESSION['form_mode'] = 'addUser';
+    $form_mode = $_SESSION['form_mode'];
+} else {
+    $form_mode = $_SESSION['form_mode'];
+}
+//change the form to update or add users
+
+if (isset($_GET['user_update']) && $_GET['user_update'] == 'true') {
+    if (
+        !empty($_POST)
+        && (isset($_POST['addLogin'])
+            || isset($_POST['addPassword'])
+            || isset($_POST['addRank']))
+    ) {
+        $email_update = $_POST['addLogin'];
+        $password_update = $_POST['addPassword'];
+        $r_id_update = $_POST['addRank'];
+        updateUser($dbh, $_GET['user_id'], $email_add, $password_add, $r_id_add);
     }
 }
 
@@ -118,8 +155,14 @@ if (isset($_SESSION['u_id'])) {
                         $tempUserId = $value;
                     }
                 }
+                //remove delete button if user not super admin
 
-                echo '<td><a href="?user_id=' . $tempUserId . '">SUPPRIMER</a></td></tr>';
+                echo '<td>';
+                if ($_SESSION['rank'] == 1) {
+                    echo '<a href="?user_id=' . $tempUserId . '&action=delete' . '">SUPPRIMER</a>';
+                }
+                echo '<a href="?user_id=' . $tempUserId . '&action=update" class="updateButton">MODIFIER</a>';
+                echo '</td></tr>';
             }
             ?>
         </tbody>
@@ -134,36 +177,74 @@ if (isset($_SESSION['u_id'])) {
 
         ?>
     </div>
+    <!-- FORM -->
+    <?php if ($form_mode == 'addUser'): ?>
+        <!-- form to add user -->
+        <form action="?add_user=true" method="post" class="form-add-user">
+            <div>
+                <label for="addLogin">Username or email : </label>
+                <label for="addPassword">Password : </label>
+                <label for="addRank">Rank : </label>
 
-    <form action="?add_user=true" method="post" class="form-add-user">
-        <div>
-            <label for="addLogin">Username or email : </label>
-            <label for="addPassword">Password : </label>
-            <label for="addRank">Rank : </label>
+            </div>
+            <div>
+                <input type="text" name="addLogin" id="addLogin">
+                <input type="password" name="addPassword" id="addPassword">
+                <select name="addRank" id="addRank">
+                    <?php
 
-        </div>
-        <div>
-            <input type="text" name="addLogin" id="addLogin">
-            <input type="password" name="addPassword" id="addPassword">
-            <select name="addRank" id="addRank">
-                <?php
-
-                $rankList = listRank($dbh);
-                foreach ($rankList as $value) {
-                    foreach ($value as $key => $data) {
-                        if ($key == 'r_label') {
-                            echo '<option value="' . $value['r_id'] . '">' . $data . '</option>';
+                    $rankList = listRank($dbh);
+                    foreach ($rankList as $value) {
+                        foreach ($value as $key => $data) {
+                            if ($key == 'r_label') {
+                                echo '<option value="' . $value['r_id'] . '">' . $data . '</option>';
+                            }
                         }
                     }
-                }
-                ?>
+                    ?>
 
-            </select>
-        </div>
-        <div>
-            <button type="submit">Add User</button>
-        </div>
-    </form>
+                </select>
+            </div>
+            <div>
+                <button type="submit">Add User</button>
+            </div>
+        </form>
+    <?php endif; ?>
+    <?php if ($form_mode == 'update'): ?>
+        <!-- form to update user need to test form for error -->
+        <form action="?user_update=true<? if (isset($_GET['user_id'])) {
+                                            echo '&user_id=' . $_GET['user_id'];
+                                        } ?>" method="post" class="form-add-user">
+            <div>
+                <label for="addLogin">Username or email : </label>
+                <label for="addPassword">Password : </label>
+                <label for="addRank">Rank : </label>
+
+            </div>
+            <div>
+                <input type="text" name="addLogin" id="addLogin">
+                <input type="password" name="addPassword" id="addPassword">
+                <select name="addRank" id="addRank">
+                    <?php
+
+                    $rankList = listRank($dbh);
+                    foreach ($rankList as $value) {
+                        foreach ($value as $key => $data) {
+                            if ($key == 'r_label') {
+                                echo '<option value="' . $value['r_id'] . '">' . $data . '</option>';
+                            }
+                        }
+                    }
+                    ?>
+
+                </select>
+            </div>
+            <div>
+                <button type="submit">Modifier</button>
+                <a href="?form=add">Add user</a>
+            </div>
+        </form>
+    <?php endif; ?>
 </section>
 
 <?php
