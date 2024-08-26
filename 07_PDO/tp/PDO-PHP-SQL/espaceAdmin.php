@@ -177,7 +177,7 @@ if (isset($_SESSION['u_id'])) {
         ?>
     </div>
     <!-- FORM -->
-    <?php if ($form_mode == 'addUser'): ?>
+    <?php if ($form_mode == 'addUser' && ($_SESSION['rank'] == 1 || $_SESSION['rank'] == 2)): ?>
         <!-- form to add user -->
         <form action="?add_user=true" method="post" class="form-add-user">
             <div>
