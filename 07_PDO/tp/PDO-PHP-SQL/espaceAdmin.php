@@ -4,12 +4,9 @@ $currentPage = 'Espace Admin';
 include_once "include/header.php";
 require_once "function/function.php";
 
-
-
 $dsn = 'mysql:host=localhost;dbname=espaceadmin;charset=utf8';
 $dbUser = 'root';
 $dbPwd = '';
-
 
 //CONNEXION
 if (isset($_POST['userID'], $_POST['password'])) {
@@ -100,15 +97,12 @@ if (!isset($_SESSION['form_mode'])) {
 
 if (isset($_GET['user_update']) && $_GET['user_update'] == 'true') {
     if (
-        !empty($_POST)
-        && (isset($_POST['addLogin'])
-            || isset($_POST['addPassword'])
-            || isset($_POST['addRank']))
+        isset($_POST['addLogin']) || isset($_POST['addPassword']) || isset($_POST['addRank'])
     ) {
         $email_update = $_POST['addLogin'];
         $password_update = $_POST['addPassword'];
         $r_id_update = $_POST['addRank'];
-        updateUser($dbh, $_GET['user_id'], $email_add, $password_add, $r_id_add);
+        updateUser($dbh, $_GET['user_id'], $email_update, $password_update, $r_id_update);
     }
 }
 
@@ -120,6 +114,9 @@ if (isset($_SESSION['u_id'])) {
 <header class="dash-header">
     <nav>
         <a href="index.php">SIGN OUT</a>
+        <?php if (isset($_SESSION['rank']) && $_SESSION['rank'] == 1): ?>
+            <a href="addRank.php">ADD RANK</a>
+        <?php endif; ?>
     </nav>
     <p>
         <?php
@@ -161,7 +158,9 @@ if (isset($_SESSION['u_id'])) {
                 if ($_SESSION['rank'] == 1) {
                     echo '<a href="?user_id=' . $tempUserId . '&action=delete' . '">SUPPRIMER</a>';
                 }
-                echo '<a href="?user_id=' . $tempUserId . '&action=update" class="updateButton">MODIFIER</a>';
+                if ($_SESSION['rank'] == 1 || $_SESSION['rank'] == 2) {
+                    echo '<a href="?user_id=' . $tempUserId . '&action=update" class="updateButton">MODIFIER</a>';
+                }
                 echo '</td></tr>';
             }
             ?>
@@ -212,9 +211,10 @@ if (isset($_SESSION['u_id'])) {
     <?php endif; ?>
     <?php if ($form_mode == 'update'): ?>
         <!-- form to update user need to test form for error -->
-        <form action="?user_update=true<? if (isset($_GET['user_id'])) {
+        <form action="?user_update=true<?php if (isset($_GET['user_id'])) {
                                             echo '&user_id=' . $_GET['user_id'];
                                         } ?>" method="post" class="form-add-user">
+            <div class="userToUpdate">User <?php echo $_GET['user_id'] ?></div>
             <div>
                 <label for="addLogin">Username or email : </label>
                 <label for="addPassword">Password : </label>

@@ -78,7 +78,7 @@ function listRank($dbh): array
 function addUser($dbh, string $email, string $password, int $r_id)
 {
     //filter blank field and invalid password
-    
+
     try {
         $query = "INSERT INTO user 
         VALUES(DEFAULT,:email,:password,:r_id)";
@@ -131,7 +131,86 @@ function deleteUser($dbh, string $userToDeleteID)
     }
 }
 
-function updateUser($dbh, string $userToUpdateID, string $email,string $password,$rank){
-//filter blank field and modify only
+function updateUser($dbh, string $userToUpdateID, string $email, string $password, $rank)
+{
+    //filter blank field and modify only
+    if ($_SESSION['rank'] == 1 || $_SESSION['rank'] == 2) {
+        try {
+            $query = "UPDATE user
+            SET email = :email, password = :password, r_id = :rank 
+            WHERE u_id = :u_id_to_update";
 
+            if (($req = $dbh->prepare($query))) {
+                if (
+                    ($req->bindValue(':u_id_to_update', $userToUpdateID))
+                    && ($req->bindValue(':email', $email))
+                    && ($req->bindValue(':password', $password))
+                    && ($req->bindValue(':rank', $rank))
+                ) {
+                    if ($req->execute()) {
+                        echo '<div class="userDelete"><p>User ' . $userToUpdateID . ' has been updated !</p></div>';
+                    } else {
+                        echo 'Erreur requête !';
+                    }
+                } else {
+                    echo 'Value bind error !';
+                }
+            } else {
+                echo 'Request prepare error !';
+            }
+        } catch (PDOException $e) {
+            echo '<div class="userDelete"><p>An error has occured when trying to update User ' . $userToUpdateID . ' !</p></div>';
+        }
+    }
+}
+
+function addRank($dbh, $rankLabel)
+{
+    try {
+        $query = "INSERT INTO role 
+        VALUES(DEFAULT,:rankLabel)";
+
+        if (($req = $dbh->prepare($query))) {
+            if (
+                ($req->bindValue(':rankLabel', $rankLabel))
+            ) {
+                if ($req->execute()) {
+                } else {
+                    echo 'Erreur requête !';
+                }
+            } else {
+                echo 'Value bind error !';
+            }
+        } else {
+            echo 'Request prepare error !';
+        }
+    } catch (PDOException $e) {
+    }
+}
+
+function listRights($dbh): array
+{
+    try {
+        $query = "SELECT *
+        FROM autorisation
+        ORDER BY autorisation_id";
+
+        if (($req = $dbh->prepare($query))) {
+
+            if ($req->execute()) {
+                $res = $req->fetchAll(PDO::FETCH_ASSOC);
+                $returnResponse = $res;
+                $req->closeCursor();
+                return $returnResponse;
+            } else {
+                echo 'Erreur requête !';
+                return [];
+            }
+        } else {
+            echo 'Request prepare error !';
+            return [];
+        }
+    } catch (PDOException $e) {
+        return [$e];
+    }
 }
