@@ -65,11 +65,18 @@ if (isset($_POST['userID'], $_POST['password'])) {
 
 //ADD USER
 if (isset($_GET['add_user']) && $_GET['add_user'] == 'true') {
-    if (!empty($_POST) && isset($_POST['addLogin']) && isset($_POST['addPassword']) && isset($_POST['addRank'])) {
+    if (
+        !empty($_POST)
+        && !empty($_POST['addLogin'])
+        && !empty($_POST['addPassword'])
+        && !empty($_POST['addRank'])
+    ) {
         $email_add = $_POST['addLogin'];
         $password_add = $_POST['addPassword'];
         $r_id_add = $_POST['addRank'];
         addUser($dbh, $email_add, $password_add, $r_id_add);
+    } else if (empty($_POST['addLogin']) || empty($_POST['addPassword'])) {
+        echo 'Login ou Password field est vide !';
     }
 }
 
@@ -79,9 +86,16 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
 }
 
 //UPDATE USER meme div de debug que delete thx
-if (isset($_GET['action']) && $_GET['action'] == 'update') {
+if (isset($_GET['action'], $_GET['user_id']) && $_GET['action'] == 'update') {
     $_SESSION['form_mode'] = 'update';
-    // updateUser($dbh, $_GET['user_id']);
+    $_SESSION['u_id_ToUpdate'] = $_GET['user_id'];
+    $user = getUser($dbh, $_GET['user_id']);
+    if (is_array($user)) {
+        //USE THIS IN THE UPDATE FORM FOR FILL
+        $user_u_id = $user['u_id'];
+        $user_u_email = $user['email'];
+        $user_u_rank = $user['r_id'];
+    }
 }
 //gere le flag form_mode pour changer le form de add à modif
 if (!isset($_SESSION['form_mode'])) {
@@ -96,6 +110,13 @@ if (!isset($_SESSION['form_mode'])) {
 //change the form to update or add users
 
 if (isset($_GET['user_update']) && $_GET['user_update'] == 'true') {
+    $user = getUser($dbh, $_SESSION['u_id_ToUpdate']);
+    if (is_array($user)) {
+        //USE THIS IN THE UPDATE FORM FOR FILL
+        $user_u_id = $user['u_id'];
+        $user_u_email = $user['email'];
+        $user_u_rank = $user['r_id'];
+    }
     if (
         isset($_POST['addLogin']) || isset($_POST['addPassword']) || isset($_POST['addRank'])
     ) {
@@ -187,8 +208,8 @@ if (isset($_SESSION['u_id'])) {
 
             </div>
             <div>
-                <input type="text" name="addLogin" id="addLogin">
-                <input type="password" name="addPassword" id="addPassword">
+                <input type="text" name="addLogin" id="addLogin" required>
+                <input type="password" name="addPassword" id="addPassword" required>
                 <select name="addRank" id="addRank">
                     <?php
 
@@ -214,7 +235,9 @@ if (isset($_SESSION['u_id'])) {
         <form action="?user_update=true<?php if (isset($_GET['user_id'])) {
                                             echo '&user_id=' . $_GET['user_id'];
                                         } ?>" method="post" class="form-add-user">
-            <div class="userToUpdate">User <?php if(isset($_GET['user_id'])) echo $_GET['user_id'] ?></div>
+            <div class="userToUpdate">User <?php if (isset($_SESSION['u_id_ToUpdate'])) {
+                                                echo $_SESSION['u_id_ToUpdate'];
+                                            } ?></div>
             <div>
                 <label for="addLogin">Username or email : </label>
                 <label for="addPassword">Password : </label>
@@ -222,7 +245,15 @@ if (isset($_SESSION['u_id'])) {
 
             </div>
             <div>
-                <input type="text" name="addLogin" id="addLogin">
+                <input type="text" name="addLogin" id="addLogin"
+                    value="<?php
+                            if (isset($user_u_email)) {
+                                echo $user_u_email;
+                            } ?>"
+                    placeholder="<?php
+                                    if (isset($user_u_email)) {
+                                        echo $user_u_email;
+                                    } ?>">
                 <input type="password" name="addPassword" id="addPassword">
                 <select name="addRank" id="addRank">
                     <?php
@@ -230,7 +261,9 @@ if (isset($_SESSION['u_id'])) {
                     $rankList = listRank($dbh);
                     foreach ($rankList as $value) {
                         foreach ($value as $key => $data) {
-                            if ($key == 'r_label') {
+                            if ($key == 'r_label' && $value['r_id'] == $user_u_rank) {
+                                echo '<option value="' . $value['r_id'] . '" selected>' . $data . '</option>';
+                            } else if ($key == 'r_label') {
                                 echo '<option value="' . $value['r_id'] . '">' . $data . '</option>';
                             }
                         }
