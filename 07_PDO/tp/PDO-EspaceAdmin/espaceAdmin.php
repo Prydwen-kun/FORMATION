@@ -76,7 +76,7 @@ if (isset($_GET['add_user']) && $_GET['add_user'] == 'true') {
         $r_id_add = $_POST['addRank'];
         addUser($dbh, $email_add, $password_add, $r_id_add);
     } else if (empty($_POST['addLogin']) || empty($_POST['addPassword'])) {
-        echo 'Login ou Password field est vide !';
+        echo '<div class="userDelete">Login ou Password field est vide !</div>';
     }
 }
 
