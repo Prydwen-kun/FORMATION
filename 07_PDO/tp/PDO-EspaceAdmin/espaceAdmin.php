@@ -42,7 +42,7 @@ if (isset($_POST['userID'], $_POST['password'])) {
                 echo 'Value bind error !';
             }
             $req->closeCursor();
-            if ($u_id == $res['email'] && $password == $res['password']) {
+            if ($u_id == $res['email'] && password_verify($password, $res['password'])) {
                 $_SESSION['connected'] = true;
                 $_SESSION['u_id'] = $u_id;
                 $_SESSION['rank'] = $res['r_id'];
@@ -72,7 +72,7 @@ if (isset($_GET['add_user']) && $_GET['add_user'] == 'true') {
         && !empty($_POST['addRank'])
     ) {
         $email_add = $_POST['addLogin'];
-        $password_add = $_POST['addPassword'];
+        $password_add = password_hash($_POST['addPassword'], PASSWORD_DEFAULT);
         $r_id_add = $_POST['addRank'];
         addUser($dbh, $email_add, $password_add, $r_id_add);
     } else if (empty($_POST['addLogin']) || empty($_POST['addPassword'])) {
