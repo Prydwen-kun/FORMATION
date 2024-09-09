@@ -144,7 +144,7 @@ function updateUser($dbh, string $userToUpdateID, string $email, string $passwor
                 if (
                     ($req->bindValue(':u_id_to_update', $userToUpdateID))
                     && ($req->bindValue(':email', $email))
-                    && ($req->bindValue(':password', $password))
+                    && ($req->bindValue(':password', password_hash($password, PASSWORD_DEFAULT)))
                     && ($req->bindValue(':rank', $rank))
                 ) {
                     if ($req->execute()) {
