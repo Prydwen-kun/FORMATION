@@ -175,9 +175,11 @@ function getGroup($dbh, $grp_id)
 
         $query = "SELECT g_id as group_ID,
          taverne.t_nom as taverne, 
+         g_taverne_fk as tavern_id,
          g_tunnel_fk as tunnel, 
          g_debuttravail as shift_start, 
          g_fintravail as shift_end,
+         
            (SELECT v_nom 
          FROM ville 
          WHERE v_id = t_villedepart_fk) as ville_depart,
@@ -379,7 +381,12 @@ function getFreeRoomFromTavern($dbh, $tavern_name)
                 if ($req->execute()) {
                     $res = $req->fetch(PDO::FETCH_ASSOC);
                     $req->closeCursor();
-                    $totalChambre = $res['nombre_chambre'];
+                    if (is_array($res)) {
+                        $totalChambre = $res['nombre_chambre'];
+                    } else {
+                        $totalChambre = $res;
+                    }
+
                     // var_dump($totalChambre);
                 } else {
                     echo '<pre>Erreur requête !</pre>';

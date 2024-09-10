@@ -7,12 +7,14 @@ require_once "function/connexion/connexionBDD.php";
 require_once "function/utils/generateList.php";
 
 //REQUETE FORM
+$errorNoRoom = '';
 $reqState = 'false';
 if (isset($_GET['action']) && $_GET['action'] == 'grp_form' && !empty($_POST)) {
     if (isset($_POST['shiftStart']) || isset($_POST['shiftEnd']) || isset($_POST['taverne']) || isset($_POST['tunnel'])) {
 
         $postManaged = $_POST;
-        if ($postManaged['taverne'] == '') {
+        // var_dump($postManaged['taverne']);
+        if ($postManaged['taverne'] == 'NULL') {
             $postManaged['taverne'] = NULL;
         }
         if (preg_match("/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/", $postManaged['shiftStart']) !== 1) {
@@ -21,6 +23,20 @@ if (isset($_GET['action']) && $_GET['action'] == 'grp_form' && !empty($_POST)) {
         if (preg_match("/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/", $postManaged['shiftEnd']) !== 1) {
             $postManaged['shiftEnd'] = '00:00:00';
         }
+
+        //free room
+        $freeRoomResult = getFreeRoomFromTavern($dbh, $_SESSION['groupInfo']['taverne']);
+
+        if ($freeRoomResult < 1) {
+            if ($_SESSION['groupInfo']['tavern_id'] == 'NULL') {
+                $postManaged['taverne'] = NULL;
+            } else {
+                $postManaged['taverne'] = $_SESSION['groupInfo']['tavern_id'];
+            }
+
+            $errorNoRoom = ' No free room ! Tavern not modified !';
+        }
+        // var_dump($_SESSION['groupInfo']['tavern_id']);
         // var_dump($postManaged['taverne']);
         $reqState = updateGroupDetail($dbh, $_SESSION['groupInfo']['group_ID'], $postManaged);
     }
@@ -50,16 +66,18 @@ if (!empty($_GET['grp'])) {
             foreach ($groupInfo as $key => $info) {
                 foreach ($info as $row => $data) {
                     if ($data != '') {
+
                         if ($row == 'progres' && $data == '100') {
                             echo '<li>' . str_replace('_', ' ', ucfirst($row)) . ' : Entretien</li>';
                         } else if ($row == 'progres') {
                             echo '<li>' . str_replace('_', ' ', ucfirst($row)) . ' : ' . $data . '%</li>';
+                        } else if ($row == 'tavern_id') {
                         } else {
                             echo '<li>' . str_replace('_', ' ', ucfirst($row)) . ' : ' . $data . '</li>';
                         }
-                    } else if ($row == 'taverne' && $data == '') {
+                    } else if ($row == 'taverne' && $data == '' && $row != 'tavern_id') {
                         echo '<li>Taverne : N/A </li>';
-                    } else {
+                    } else if ($row != 'tavern_id') {
                         echo '<li> N/A </li>';
                     }
                 }
@@ -116,10 +134,12 @@ if (!empty($_GET['grp'])) {
                     foreach ($array as $row => $groupItem) {
                         if ($row == 'id') {
                             echo '<option value="' . $groupItem . '"';
+                            // $tavernID = $groupItem;
                         }
                         if ($row == 'nom') {
                             if ($groupItem == $_SESSION['groupInfo']['taverne']) {
                                 echo ' selected';
+                                // $_SESSION['taverneID'] = $tavernID;
                             }
                             echo '>';
                             echo  $groupItem . '(Libre : ' . getFreeRoomFromTavern($dbh, $groupItem) . ')</option>';
@@ -127,16 +147,16 @@ if (!empty($_GET['grp'])) {
                     }
                 }
                 if ($_SESSION['groupInfo']['taverne'] == '') {
-                    echo '<option value="" selected>Aucune affectation</option>';
+                    echo '<option value="NULL" selected>Aucune affectation</option>';
                 } else {
-                    echo '<option value="">Aucune affectation</option>';
+                    echo '<option value="NULL">Aucune affectation</option>';
                 }
                 ?>
             </select>
             <button>Submit</button>
         </form>
         <?php if ($reqState === 'success') {
-            echo '<p class="requeteState">Groupe changé avec succès !</p>';
+            echo '<p class="requeteState">Groupe changé avec succès ! ' . $errorNoRoom . '</p>';
         }
         ?>
     <?php endif; ?>
