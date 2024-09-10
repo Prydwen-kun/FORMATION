@@ -65,9 +65,9 @@ if (!empty($_GET['ville'])) {
                     }
                     if ($row == 'progres') {
                         if ($tunnel == '100') {
-                            echo ': Ouvert  ';
+                            echo ': Ouvert  ||  ';
                         } else {
-                            echo ' : ' . $tunnel . '%  ';
+                            echo ' : ' . $tunnel . '%  ||  ';
                         }
                     }
                 }
@@ -83,9 +83,9 @@ if (!empty($_GET['ville'])) {
                     }
                     if ($row == 'progres') {
                         if ($tunnel == '100') {
-                            echo ': Ouvert  ';
+                            echo ': Ouvert  ||  ';
                         } else {
-                            echo ' : ' . $tunnel . '%  ';
+                            echo ' : ' . $tunnel . '%  ||  ';
                         }
                     }
                 }
