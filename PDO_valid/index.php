@@ -9,8 +9,10 @@ require_once "function/utils/generateList.php";
 $reqState = 'false';
 
 if (isset($_GET['action']) && $_GET['action'] == 'grp_change' && !empty($_POST)) {
-    if (isset($_POST['nainID'], $_POST['groupeNum'])) {
+    if (isset($_POST['nainID'], $_POST['groupeNum']) && intval($_POST['groupeNum']) != 0) {
         $reqState = changeGroupe($dbh, $_POST['nainID'], $_POST['groupeNum']);
+    } else {
+        $reqState = changeGroupe($dbh, $_POST['nainID'], NULL);
     }
 }
 
@@ -32,13 +34,14 @@ $liste_nains = listDwarves($dbh, 5);
         <label for="groupeSelect">Groupe : </label>
         <select name="groupeNum" id="groupeSelect">
             <?php
-            $listGroup = listGroup($dbh);
+            $listGroup = listGroupID($dbh);
             foreach ($listGroup as $array) {
                 foreach ($array as $groupItem) {
                     echo '<option value="' . $groupItem . '">' . $groupItem . '</option>';
                 }
             }
             ?>
+            <option value="NULL">Sans Groupe</option>
         </select>
         <button>Changer de groupe</button>
     </form>

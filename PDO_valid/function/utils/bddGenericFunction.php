@@ -169,6 +169,31 @@ function listGroup($dbh)
         echo '<pre>Erreur query DB ! ' . $e . '</pre>';
     }
 }
+function listGroupID($dbh)
+{
+    try {
+
+        $query = "SELECT g_id as group_ID
+        FROM groupe
+        ORDER BY g_id
+        ";
+
+        if (($req = $dbh->prepare($query))) {
+
+            if ($req->execute()) {
+                $res = $req->fetchAll(PDO::FETCH_ASSOC);
+                $req->closeCursor();
+                return $res;
+            } else {
+                echo '<pre>Erreur requête !</pre>';
+            }
+        } else {
+            echo '<pre>Request prepare error !</pre>';
+        }
+    } catch (PDOException $e) {
+        echo '<pre>Erreur query DB ! ' . $e . '</pre>';
+    }
+}
 function getGroup($dbh, $grp_id)
 {
     try {
