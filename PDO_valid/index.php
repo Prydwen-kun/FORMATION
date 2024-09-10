@@ -33,7 +33,6 @@ $liste_nains = listDwarves($dbh, 5);
         <select name="groupeNum" id="groupeSelect">
             <?php
             $listGroup = listGroup($dbh);
-            var_dump($listGroup);
             foreach ($listGroup as $array) {
                 foreach ($array as $groupItem) {
                     echo '<option value="' . $groupItem . '">' . $groupItem . '</option>';

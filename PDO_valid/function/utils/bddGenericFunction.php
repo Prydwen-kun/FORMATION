@@ -147,7 +147,7 @@ function listGroup($dbh)
 {
     try {
 
-        $query = "SELECT g_id as group_ID, taverne.t_nom as taverne
+        $query = "SELECT g_id as group_ID, taverne.t_nom as taverne, g_tunnel_fk as tunnel, g_debuttravail as shift_start, g_fintravail as shift_end
         FROM groupe
         LEFT JOIN taverne ON g_taverne_fk = taverne.t_id
         ORDER BY g_id
@@ -173,10 +173,24 @@ function getGroup($dbh, $grp_id)
 {
     try {
 
-        $query = "SELECT g_id as group_ID, taverne.t_nom as taverne
+        $query = "SELECT g_id as group_ID,
+         taverne.t_nom as taverne, 
+         g_tunnel_fk as tunnel, 
+         g_debuttravail as shift_start, 
+         g_fintravail as shift_end,
+           (SELECT v_nom 
+         FROM ville 
+         WHERE v_id = t_villedepart_fk) as ville_depart,
+         (SELECT v_nom 
+         FROM ville 
+         WHERE v_id = t_villearrivee_fk) as ville_arrivee, 
+          t_progres as progres
         FROM groupe
-        JOIN taverne ON g_taverne_fk = taverne.t_id
+        LEFT JOIN taverne ON g_taverne_fk = taverne.t_id
+        JOIN tunnel ON g_tunnel_fk = tunnel.t_id
+        JOIN ville ON v_id = t_villedepart_fk OR v_id = t_villearrivee_fk
         WHERE g_id = :grp_id
+        GROUP BY g_tunnel_fk
         ";
 
         if (($req = $dbh->prepare($query))) {
@@ -184,6 +198,7 @@ function getGroup($dbh, $grp_id)
                 if ($req->execute()) {
                     $res = $req->fetchAll(PDO::FETCH_ASSOC);
                     $req->closeCursor();
+                    // var_dump($res);
                     return $res;
                 } else {
                     echo '<pre>Erreur requête !</pre>';
@@ -285,7 +300,9 @@ function listTavern($dbh)
 {
     try {
 
-        $query = "SELECT t_nom as nom,
+        $query = "SELECT 
+        t_id as id,
+        t_nom as nom,
         t_chambres as nombre_chambre,
         v_nom as ville,
         t_blonde as blonde,
@@ -334,6 +351,65 @@ function getTavern($dbh, $tavernName)
                     $res = $req->fetchAll(PDO::FETCH_ASSOC);
                     $req->closeCursor();
                     return $res;
+                } else {
+                    echo '<pre>Erreur requête !</pre>';
+                }
+            } else {
+                echo '<pre>Erreur bind value!</pre>';
+            }
+        } else {
+            echo '<pre>Request prepare error !</pre>';
+        }
+    } catch (PDOException $e) {
+        echo '<pre>Erreur query DB ! ' . $e . '</pre>';
+    }
+}
+
+function getFreeRoomFromTavern($dbh, $tavern_name)
+{
+    try {
+
+        $query = "SELECT t_chambres as nombre_chambre
+        FROM taverne
+        WHERE taverne.t_nom =:tavern_name
+        ";
+
+        if (($req = $dbh->prepare($query))) {
+            if ($req->bindValue(':tavern_name', $tavern_name)) {
+                if ($req->execute()) {
+                    $res = $req->fetch(PDO::FETCH_ASSOC);
+                    $req->closeCursor();
+                    $totalChambre = $res['nombre_chambre'];
+                    // var_dump($totalChambre);
+                } else {
+                    echo '<pre>Erreur requête !</pre>';
+                }
+            } else {
+                echo '<pre>Erreur bind value!</pre>';
+            }
+        } else {
+            echo '<pre>Request prepare error !</pre>';
+        }
+    } catch (PDOException $e) {
+        echo '<pre>Erreur query DB ! ' . $e . '</pre>';
+    }
+    try {
+
+        $query2 = "SELECT COUNT(n_nom) as room
+        FROM taverne
+        RIGHT JOIN groupe ON g_taverne_fk = taverne.t_id
+        RIGHT JOIN nain ON n_groupe_fk = g_id
+        WHERE taverne.t_nom =:tavern_name
+        ";
+
+        if (($req = $dbh->prepare($query2))) {
+            if ($req->bindValue(':tavern_name', $tavern_name)) {
+                if ($req->execute()) {
+                    $res = $req->fetch(PDO::FETCH_ASSOC);
+                    $req->closeCursor();
+                    $nainChambre = $res['room'];
+                    // var_dump($nainChambre);
+                    return $totalChambre - $nainChambre;
                 } else {
                     echo '<pre>Erreur requête !</pre>';
                 }
@@ -468,6 +544,31 @@ function listTunnelToCity($dbh, $city_id)
     }
 }
 
+function listTunnelID($dbh)
+{
+    try {
+
+        $query = "SELECT t_id as id
+        FROM tunnel
+        ";
+
+        if (($req = $dbh->prepare($query))) {
+
+            if ($req->execute()) {
+                $res = $req->fetchAll(PDO::FETCH_ASSOC);
+                $req->closeCursor();
+                return $res;
+            } else {
+                echo '<pre>Erreur requête !</pre>';
+            }
+        } else {
+            echo '<pre>Request prepare error !</pre>';
+        }
+    } catch (PDOException $e) {
+        echo '<pre>Erreur query DB ! ' . $e . '</pre>';
+    }
+}
+
 function changeGroupe($dbh, $dwarfID, $groupNum)
 {
     try {
@@ -499,4 +600,69 @@ function changeGroupe($dbh, $dwarfID, $groupNum)
     }
 }
 
-function getDwarvesFromTavern(){}
+function getDwarvesFromGroup($dbh, $grp_id)
+{
+    try {
+
+        $query = "SELECT n_nom as nom
+        FROM groupe
+        JOIN nain ON n_groupe_fk = g_id
+        WHERE g_id = :grp_id
+        ";
+
+        if (($req = $dbh->prepare($query))) {
+            if ($req->bindValue(':grp_id', $grp_id)) {
+                if ($req->execute()) {
+                    $res = $req->fetchAll(PDO::FETCH_ASSOC);
+                    $req->closeCursor();
+                    return $res;
+                } else {
+                    echo '<pre>Erreur requête !</pre>';
+                }
+            } else {
+                echo '<pre>Erreur bind value!</pre>';
+            }
+        } else {
+            echo '<pre>Request prepare error !</pre>';
+        }
+    } catch (PDOException $e) {
+        echo '<pre>Erreur query DB ! ' . $e . '</pre>';
+    }
+}
+
+function updateGroupDetail($dbh, $grp_id, $post)
+{
+
+    try {
+
+        $query = "UPDATE groupe
+        SET g_debuttravail = :shiftStart,
+        g_fintravail = :shiftEnd,
+        g_taverne_fk = :taverne_id,
+        g_tunnel_fk = :tunnel_id
+        WHERE g_id = :grp_id
+        ";
+        if (($req = $dbh->prepare($query))) {
+            if (
+                $req->bindValue(':grp_id', $grp_id)
+                && $req->bindValue(':shiftStart', $post['shiftStart'])
+                && $req->bindValue(':shiftEnd', $post['shiftEnd'])
+                && $req->bindValue(':taverne_id', $post['taverne'])
+                && $req->bindValue(':tunnel_id', $post['tunnel'])
+            ) {
+                if ($req->execute()) {
+                    $req->closeCursor();
+                    return 'success';
+                } else {
+                    echo '<pre>Erreur requête !</pre>';
+                }
+            } else {
+                echo '<pre>Erreur bind value!</pre>';
+            }
+        } else {
+            echo '<pre>Request prepare error !</pre>';
+        }
+    } catch (PDOException $e) {
+        echo '<pre>Erreur query DB ! ' . $e . '</pre>';
+    }
+}

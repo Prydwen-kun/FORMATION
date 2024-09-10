@@ -9,9 +9,12 @@ require_once "function/utils/generateList.php";
 $listeTaverne = listTavern($dbh);
 
 $tavernInfo = [];
+$freeRoom = 0;
 
 if (!empty($_GET['taverne'])) {
     $tavernInfo = getTavern($dbh, $_GET['taverne']);
+    $freeRoom = getFreeRoomFromTavern($dbh, $_GET['taverne']);
+    // var_dump($freeRoom);
 } else {
     $tavernInfo = [];
 }
@@ -27,8 +30,11 @@ if (!empty($_GET['taverne'])) {
                         if ($data == '1') {
                             echo '<li> Sert de la bière ' . $row . '</li>';
                         }
+                    } else if ($row == 'nombre_chambre') {
+                        echo '<li>' . str_replace('_', ' ', ucfirst($row)) . ' : ' . $data . '</li>';
+                        echo '<li> Chambre libre : ' . $freeRoom . '</li>';
                     } else if ($data != '') {
-                        echo '<li>' . $row . ' : ' . $data . '</li>';
+                        echo '<li>' . str_replace('_', ' ', ucfirst($row)) . ' : ' . $data . '</li>';
                     } else {
                         echo '<li> N/A </li>';
                     }

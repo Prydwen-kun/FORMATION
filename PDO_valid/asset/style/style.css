@@ -68,6 +68,18 @@ header {
   padding: 1rem;
 }
 
+.form-change-groupe {
+  border: 1px solid gray;
+  background-color: rgb(200, 213, 255);
+  margin: 0 auto;
+  max-width: 85%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 1.2rem;
+  padding: 1rem;
+}
+
 /* detail nain */
 .detailNain {
   list-style-type: none;
