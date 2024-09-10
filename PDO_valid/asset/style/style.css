@@ -79,6 +79,38 @@ header {
   font-size: 1.2rem;
   padding: 1rem;
 }
+.form-connexion {
+  border: 1px solid gray;
+  background-color: rgb(200, 213, 255);
+  margin: 0 auto;
+  max-width: 85%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 2rem;
+  padding: 1rem;
+}
+
+.form-addNain{
+  margin: 2rem auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+.form-addNain>div{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.addNainButton{
+  font-size: 2rem;
+  color: aliceblue;
+  background-color: red;
+}
+.addNainButton:hover{
+  background-color: rgb(255, 145, 145);
+}
 
 /* detail nain */
 .detailNain {
@@ -106,4 +138,16 @@ header {
   width: 100%;
   bottom: 0;
   padding: 0.5rem;
+}
+
+.coError{
+  font-size: 2rem;
+  background-color: red;
+}
+
+/* button connexion */
+
+.connexionButton{
+  border: 1px solid gray;
+  border-radius: 3px;
 }
