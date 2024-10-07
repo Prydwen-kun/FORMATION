@@ -26,8 +26,8 @@
             <?php foreach($Nains as $nain): ?>
               <tr class="">
 
-                <th><?= $nain->getId() ?></th>
-                <th><?= $nain->getNom() ?></th>
+                <td><?= $nain->getId() ?></td>
+                <td><?= $nain->getNom() ?></td>
                 <td><?= $nain->getBarbe() ?> cm</td>
                 <td><?= $nain->getGroupe() ?></td>
                 <td><?= $nain->getVille_natale() ?></td>

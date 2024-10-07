@@ -31,9 +31,9 @@ try {
 
       if (method_exists($ctrl, $method)) {
         # On vérifie si on a un $_GET['id'] qu'il n'est pas vide et du type numérique
-        if (!empty($_GET['id']) && ctype_digit($_GET['id'])) {
+        if (!empty($_GET['nain']) && ctype_digit($_GET['nain'])) {
           # update($_GET['id], $_POST)
-          $controller->$method($_GET['id'], $_POST);
+          $controller->$method($_GET['nain'], $_POST);
         } else {
           # create($_POST)
           $controller->$method($_POST);
@@ -43,9 +43,9 @@ try {
 
       if (method_exists($ctrl, $method)) {
         # On vérifie si on a un $_GET['id'] qu'il n'est pas vide et du type numérique
-        if (!empty($_GET['id']) && ctype_digit($_GET['id'])) {
+        if (!empty($_GET['nain']) && ctype_digit($_GET['nain'])) {
           # show($_GET['id']) ou delete($_GET['id'])
-          $controller->$method($_GET['id']);
+          $controller->$method($_GET['nain']);
         } else {
           # index()
           $controller->$method();
