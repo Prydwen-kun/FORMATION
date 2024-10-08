@@ -2,11 +2,11 @@
 require_once 'config/config.php';
 require_once 'lib/autoloader.php';
 
-require 'views/partials/head.php';
+// require 'views/partials/head.php';
 
 // Your main application logic goes here
 
-$ctrl = 'ConversationController';
+$ctrl = 'AuthController';//DEFAULT CONTROLLER
 
 if (isset($_GET['ctrl'])) {
    
@@ -15,7 +15,8 @@ if (isset($_GET['ctrl'])) {
 
 
 
-$method = 'index';
+$method = 'login';//DEFAULT METHOD
+
 if (isset($_GET['action'])) {
  
   $method = $_GET['action'];
@@ -57,6 +58,6 @@ try {
   die($e->getMessage());
 }
 
-require 'views/partials/foot.php';
+// require 'views/partials/foot.php';
 
 ?>

@@ -14,7 +14,7 @@
 
         foreach($datas as $data)
         {
-          $classTemplate[] = new classTemplate($data);
+          $Templates[] = new Template($data);
         }
 
         include 'views/index.php';
