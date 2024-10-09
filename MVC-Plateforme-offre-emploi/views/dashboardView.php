@@ -20,7 +20,7 @@ include 'views/partials/head.php';
     </nav>
 </div>
 <div class="section">
-    <h2 class="title">Liste des offres</h2>
+    <h2 class="title text-color">Liste des offres</h2>
     <div class="card is-shadowless">
         <div class="card-content">
             content
