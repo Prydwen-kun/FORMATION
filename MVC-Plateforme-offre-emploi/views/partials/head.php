@@ -12,8 +12,9 @@
       min-height: 100vh;
     }
   </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="has-background-dark is-fullheight">
-  <div class="column is-fullheight is-marginless">
-    <div class="container column is-10">
+<body class="is-fullheight back-black">
+  <div class="column is-fullheight is-marginless ">
+    <div class="container column is-10 back-dark">

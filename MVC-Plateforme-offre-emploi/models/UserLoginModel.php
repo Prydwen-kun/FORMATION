@@ -18,6 +18,33 @@ class UserLoginModel extends CoreModel
         return false;
     }
 
+    public function signup($username, $email, $password, $specialite, $entreprise)
+    {
+        $query = "INSERT INTO users VALUES(DEFAULT,:username,:password,:email,DEFAULT,:entreprise,:specialite)";
+
+        if ($entreprise != '2' && $entreprise != '3') {
+            $entreprise = '3';
+            return false;
+        }
+
+        if ($specialite != '1' && $specialite != '2') {
+            $specialite = '1';
+            return false;
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+
+        $this->_req = $this->getDb()->prepare($query);
+        $this->_req->bindValue("username", $username, PDO::PARAM_STR);
+        $this->_req->bindValue("email", $email, PDO::PARAM_STR);
+        $this->_req->bindValue("password", password_hash($password, PASSWORD_BCRYPT), PDO::PARAM_STR);
+        $this->_req->bindValue("specialite", $specialite, PDO::PARAM_INT);
+        $this->_req->bindValue("entreprise", $entreprise, PDO::PARAM_INT);
+        return $this->_req->execute();
+    }
+
     public function logout()
     {
 

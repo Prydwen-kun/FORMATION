@@ -9,10 +9,10 @@ class AuthController
 
     public function login()
     {
-
+        $error = '';
 
         if (!$this->userLogin->isLoggedIn()) {
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!empty($_POST)) {
                 $username = $_POST['username'];
                 $password = $_POST['password'];
 
@@ -27,8 +27,38 @@ class AuthController
             }
 
             // Display login form
+            if (isset($_GET['from']) && $_GET['from'] == 'signed') {
+                require 'views/accountCreatedView.php';
+            }
+
             require 'views/loginView.php';
-        } else {
+        } else if ($this->userLogin->isLoggedIn()) {
+            header('Location: index.php?ctrl=auth&action=dashboard');
+        }
+    }
+
+    public function signup()
+    {
+        $error = '';
+        if (!$this->userLogin->isLoggedIn()) {
+            if (!empty($_POST)) {
+                //signup
+                $username = $_POST['username'];
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                $specialite = $_POST['specialite'];
+                $entreprise = $_POST['entreprise'];
+                if (strlen($password) >= 5 && $this->userLogin->signup($username, $email, $password, $specialite, $entreprise)) {
+                    header('Location: index.php?ctrl=auth&action=login&from=signed');
+                    exit;
+                } else {
+                    require 'views/signErrorView.php';
+                    require 'views/signupView.php';
+                }
+            } else {
+                require 'views/signupView.php';
+            }
+        } else if ($this->userLogin->isLoggedIn()) {
             header('Location: index.php?ctrl=auth&action=dashboard');
         }
     }
@@ -42,6 +72,7 @@ class AuthController
 
     public function dashboard()
     {
+
         if ($this->userLogin->isLoggedIn()) {
             //affiche dashboardView
             require 'views/dashboardView.php';
@@ -52,8 +83,8 @@ class AuthController
 
     public function error403()
     {
-        
+        require 'views/403View.php';
         require 'views/loginView.php';
-        require 'views/403View.php';//JS message erreur
+        //JS message erreur
     }
 }

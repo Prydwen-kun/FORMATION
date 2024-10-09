@@ -1,32 +1,34 @@
 <?php
 require_once 'config/config.php';
 require_once 'lib/autoloader.php';
-
+session_start();
 // require 'views/partials/head.php';
 
 // Your main application logic goes here
 
-$ctrl = 'AuthController';//DEFAULT CONTROLLER
+$ctrl = 'AuthController'; //DEFAULT CONTROLLER
 
 if (isset($_GET['ctrl'])) {
-   
+
   $ctrl = ucfirst(strtolower($_GET['ctrl'])) . 'Controller';
 }
 
 
 
-$method = 'login';//DEFAULT METHOD
+$method = 'login'; //DEFAULT METHOD
 
 if (isset($_GET['action'])) {
- 
+
   $method = $_GET['action'];
 }
 
 try {
- 
+
   if (class_exists($ctrl)) {
- 
+
     $controller = new $ctrl();
+
+    define("controller_method", get_class($controller) . $method);
 
     if (!empty($_POST)) {
 
@@ -59,5 +61,3 @@ try {
 }
 
 // require 'views/partials/foot.php';
-
-?>

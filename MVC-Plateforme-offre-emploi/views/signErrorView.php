@@ -4,10 +4,10 @@
         error.style.display = "none"
     }
 </script>
-<?php $error = "Forbidden" ?>
+<?php $error = "Sign Up Error" ?>
 <div id="forbidden" class="forbidden-error has-text-centered" onclick="closeDiv()">
 
     <div class="has-text-danger">
-        Access Forbidden
+        Sign Up Error
     </div>
 </div>
