@@ -4,6 +4,13 @@ class UserLoginModel extends CoreModel
     private $_req;
     private $_user;
 
+    public function __destruct()
+    {
+      if (!empty($this->_req)) {
+        $this->_req->closeCursor();
+      }
+    }
+
     public function login($username, $password)
     {
         $query = "SELECT * FROM users WHERE username = :username";
