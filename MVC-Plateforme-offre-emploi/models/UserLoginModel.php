@@ -13,6 +13,7 @@ class UserLoginModel extends CoreModel
 
         if ($this->_user && password_verify($password, $this->_user['password'])) {
             $_SESSION['user_id'] = $this->_user['id'];
+            $_SESSION['role'] = $this->_user['role_id_fk'];
             return true;
         }
         return false;
