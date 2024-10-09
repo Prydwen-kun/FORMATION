@@ -21,10 +21,19 @@ include 'views/partials/head.php';
 </div>
 <div class="section">
     <h2 class="title text-color">Liste des offres</h2>
-    <div class="card is-shadowless">
-        <div class="card-content">
-            content
-        </div>
+    <div class="columns">
+        <?php foreach ($Offres as $offre): ?>
+            <div class="back-black text-color column">
+                <div class="card background text-color">
+                    <div class="card-content"><?= $offre->getTitle() ?></div>
+                    <div class="card-content"><?= $offre->getAuteur() ?></div>
+                    <div class="card-content"><?= $offre->getContent() ?></div>
+                    <div class="card-content"><?= $offre->getSalaire() ?></div>
+                    <div class="card-content"><?= $offre->getLocalisation() ?></div>
+                    <div class="card-content"><?= $offre->getCover() ?></div>
+                </div>
+            </div>
+        <?php endforeach; ?>
     </div>
 </div>
 <!-- Main content goes here -->

@@ -2,6 +2,7 @@
 class AuthController
 {
     private $userLogin;
+    private $offre;
     public function __construct()
     {
         $this->userLogin = new UserLoginModel();
@@ -74,6 +75,15 @@ class AuthController
     {
 
         if ($this->userLogin->isLoggedIn()) {
+
+            //get offer data
+            $OffreModel = new OffreModel();
+            $datas = $OffreModel->readAll();
+
+            foreach ($datas as $data) {
+                $Offres[] = new Offre($data);
+            }
+
             //affiche dashboardView
             require 'views/dashboardView.php';
         } else {
