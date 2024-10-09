@@ -22,8 +22,11 @@ class UserLoginModel extends CoreModel
     {
         $query = "INSERT INTO users VALUES(DEFAULT,:username,:password,:email,DEFAULT,:entreprise,:specialite)";
 
-        if ($entreprise != '2' && $entreprise != '3') {
+        if ($entreprise == 'true') {
+            $entreprise = '2';
+        } else if ($entreprise == 'false') {
             $entreprise = '3';
+        } else {
             return false;
         }
 
