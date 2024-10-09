@@ -24,13 +24,14 @@ include 'views/partials/head.php';
     <div class="columns">
         <?php foreach ($Offres as $offre): ?>
             <div class="back-black text-color column">
-                <div class="card background text-color">
-                    <div class="card-content"><?= $offre->getTitle() ?></div>
-                    <div class="card-content"><?= $offre->getAuteur() ?></div>
-                    <div class="card-content"><?= $offre->getContent() ?></div>
-                    <div class="card-content"><?= $offre->getSalaire() ?></div>
-                    <div class="card-content"><?= $offre->getLocalisation() ?></div>
-                    <div class="card-content"><?= $offre->getCover() ?></div>
+                <div class="card background text-color p-2" style="background-image: url(<?= $offre->getCover() ?>); background-size:cover;background-position:center;background-repeat:no-repeat;">
+                    <div class="card-content title is-4 text-color"><?= ucfirst($offre->getTitle()) ?> par <?= $offre->getAuteur() ?></div>
+                    <div class="card backcolor-50 text-color">
+                        <div class="card-content"><?= $offre->getContent() ?></div>
+                        <div class="card-content">Salaire : <?= $offre->getSalaire() ?></div>
+                        <div class="card-content">Adresse : <?= $offre->getLocalisation() ?></div>
+                        <div class="card-content"><?= $offre->getCover() ?></div>
+                    </div>
                 </div>
             </div>
         <?php endforeach; ?>

@@ -14,8 +14,9 @@ class OffreModel extends CoreModel
     public function readAll(): array
     {
 
-        $sql = "SELECT offres.id, auteur_id AS auteur, title, content, salaire, cover, localisation
+        $sql = "SELECT offres.id, users.username AS auteur, title, content, salaire, cover, localisation
                 FROM offres
+                JOIN users ON offres.auteur_id = users.id
                 ORDER BY title
                 ";
 

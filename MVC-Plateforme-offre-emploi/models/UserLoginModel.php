@@ -6,9 +6,9 @@ class UserLoginModel extends CoreModel
 
     public function __destruct()
     {
-      if (!empty($this->_req)) {
-        $this->_req->closeCursor();
-      }
+        if (!empty($this->_req)) {
+            $this->_req->closeCursor();
+        }
     }
 
     public function login($username, $password)
@@ -42,14 +42,29 @@ class UserLoginModel extends CoreModel
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
         }
+        if (!$this->userExist($username)) {
+            $this->_req = $this->getDb()->prepare($query);
+            $this->_req->bindValue("username", $username, PDO::PARAM_STR);
+            $this->_req->bindValue("email", $email, PDO::PARAM_STR);
+            $this->_req->bindValue("password", password_hash($password, PASSWORD_BCRYPT), PDO::PARAM_STR);
+            $this->_req->bindValue("specialite", $specialite, PDO::PARAM_INT);
+            $this->_req->bindValue("entreprise", $entreprise, PDO::PARAM_INT);
+            return $this->_req->execute();
+        } else {
+            return false;
+        }
+    }
+
+    public function userExist($username)
+    {
+        $query = "SELECT * FROM users WHERE users.username = :username";
 
         $this->_req = $this->getDb()->prepare($query);
         $this->_req->bindValue("username", $username, PDO::PARAM_STR);
-        $this->_req->bindValue("email", $email, PDO::PARAM_STR);
-        $this->_req->bindValue("password", password_hash($password, PASSWORD_BCRYPT), PDO::PARAM_STR);
-        $this->_req->bindValue("specialite", $specialite, PDO::PARAM_INT);
-        $this->_req->bindValue("entreprise", $entreprise, PDO::PARAM_INT);
-        return $this->_req->execute();
+        $this->_req->execute();
+        $response = $this->_req->fetchAll(PDO::FETCH_ASSOC);
+        $this->_req->closeCursor();
+        return count($response) == 1 ? true : false;
     }
 
     public function logout()

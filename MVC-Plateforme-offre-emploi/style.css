@@ -2,6 +2,7 @@
   --background-black: #010101;
   --background-dark: #151b1f;
   --background: #232c33;
+  --background-50: #232c336b;
   --text-color: #f7971d;
   --red: #b11717;
 }
@@ -26,6 +27,9 @@
 }
 .background {
   background-color: var(--background);
+}
+.backcolor-50 {
+  background-color: var(--background-50);
 }
 
 .forbidden-error {
