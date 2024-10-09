@@ -18,7 +18,7 @@ include 'views/partials/head.php';
                 <div class="field mb-6 has-text-left">
                     <label class="label text-color" for="password">Password : </label>
                     <div class="control">
-                        <input class="input" type="text" name="password" id="password" placeholder="password" required>
+                        <input class="input" type="password" name="password" id="password" placeholder="password" required>
                     </div>
                 </div>
                 <div class="field mb-2">

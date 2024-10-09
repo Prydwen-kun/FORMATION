@@ -47,18 +47,21 @@ include 'views/partials/head.php';
                     <label class="label text-color" for="specialite">Spécialité : </label>
                     <div class="select">
                         <select name="specialite" id="specialite">
-                            <option value="1">Programmation</option>
+                            <option value="1" selected>Programmation</option>
                             <option value="2">Designer</option>
                         </select>
                     </div>
                 </div>
                 <div class="field mb-6 has-text-left">
-                    <label class="label text-color checkbox" for="entreprise">
-                        <input type="checkbox" name="entreprise" id="entreprise" required> Entreprise
-                        <!-- 1-admin 2-entreprise 3-etudiant -->
-                    </label>
-
+                    <label class="label text-color" for="entreprise">Catégorie : </label>
+                    <div class="select">
+                        <select name="entreprise" id="entreprise">
+                            <option value="2">Entreprise</option>
+                            <option value="3" selected>Etudiant</option>
+                        </select>
+                    </div>
                 </div>
+                <!-- 1-admin 2-entreprise 3-etudiant remplacer par un select -->
                 <div class="field mb-2">
                     <div class="control has-text-centered">
                         <button class="button is-primary button-color button-text-color" type="submit">Sign Up</button>
