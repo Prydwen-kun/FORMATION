@@ -84,8 +84,25 @@ class AuthController
                 $Offres[] = new Offre($data);
             }
 
+            $currentUser = $this->userLogin->getCurrentUser()['username'];
+
             //affiche dashboardView
+            require 'views/sideNavbarView.php';
             require 'views/dashboardView.php';
+        } else {
+            header('Location: index.php?ctrl=auth&action=error403');
+        }
+    }
+
+    public function profil()
+    {
+
+        if ($this->userLogin->isLoggedIn()) {
+
+            $currentUser = $this->userLogin->getCurrentUser()['username'];
+
+            require 'views/sideNavbarView.php';
+            require 'views/profilView.php';
         } else {
             header('Location: index.php?ctrl=auth&action=error403');
         }
