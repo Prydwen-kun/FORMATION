@@ -23,7 +23,12 @@ include 'views/partials/head.php';
 <div class="section">
     <h2 class="title text-color">Profil</h2>
     <div class="columns">
-        
+       <div class="column"><?=$user->getId()?></div> 
+       <div class="column"><?=$user->getUsername()?></div> 
+       <div class="column"><?=$user->getEmail()?></div> 
+       <div class="column"><?=$user->getLast_login()?></div> 
+       <div class="column"><?=$user->getRole()?></div> 
+       <div class="column"><?=$user->getSpecialite()?></div> 
     </div>
 </div>
 

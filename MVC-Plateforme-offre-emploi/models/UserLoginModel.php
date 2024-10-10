@@ -81,7 +81,17 @@ class UserLoginModel extends CoreModel
     public function getCurrentUser()
     {
         if ($this->isLoggedIn()) {
-            $query = "SELECT * FROM users WHERE id = :id";
+            $query =
+                "SELECT users.id AS id,
+            username ,
+            email,
+            last_login,
+            role.label AS role,
+            specialite.label AS specialite
+             FROM users
+             LEFT JOIN role ON role_id_fk = role.id
+             LEFT JOIN specialite ON spe_id_fk = specialite.id 
+             WHERE users.id = :id";
             $this->_req = $this->getDb()->prepare($query);
             $this->_req->execute(['id' => $_SESSION['user_id']]);
             return $this->_req->fetch(PDO::FETCH_ASSOC);

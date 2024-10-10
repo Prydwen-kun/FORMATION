@@ -101,6 +101,13 @@ class AuthController
 
             $currentUser = $this->userLogin->getCurrentUser()['username'];
 
+            $datas = $this->userLogin->getCurrentUser();
+
+            if($datas === null){echo "error";}
+
+            $user = new User($datas);
+
+
             require 'views/sideNavbarView.php';
             require 'views/profilView.php';
         } else {
