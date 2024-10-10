@@ -61,7 +61,7 @@ include 'views/partials/head.php';
     <div class="columns is-multiline">
         <?php foreach ($Offres as $offre): ?>
             <div class="back-dark text-color column is-4">
-                <div class="card background text-color p-2" style="background-image: url(<?= $offre->getCover() ?>); background-size:cover;background-position:center;background-repeat:no-repeat;">
+                <div class="card background text-color p-2 offer-maxHeight" style="background-image: url(<?= $offre->getCover() ?>); background-size:cover;background-position:center;background-repeat:no-repeat;">
                     <div class="card-content">
                         <div class="content title is-4 text-color"><?= ucfirst($offre->getTitle()) ?> par <?= $offre->getAuteur() ?>
                         </div>
