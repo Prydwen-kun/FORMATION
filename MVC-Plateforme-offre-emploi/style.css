@@ -55,3 +55,9 @@
   background-color: #f7971d;
   color: #151b1f;
 }
+.inline {
+  display: inline;
+}
+.text-overflow-wrap {
+  overflow-wrap: break-word!important;
+}

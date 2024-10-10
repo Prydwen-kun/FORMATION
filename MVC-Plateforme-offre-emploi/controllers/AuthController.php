@@ -19,6 +19,7 @@ class AuthController
 
                 if ($this->userLogin->login($username, $password)) {
                     // Redirect to dashboard or home page
+                    $this->userLogin->lastLoginUpdate($username);
                     header('Location: index.php?ctrl=auth&action=dashboard');
                     exit;
                 } else {
@@ -76,6 +77,23 @@ class AuthController
 
         if ($this->userLogin->isLoggedIn()) {
 
+            $filterDefault = 'title';
+            $nbOffreDefault = 20;
+            //if post not empty use for search and filter
+            //dans offreModel readAll orderBY filter et limit par nb max + pagination
+            if (!empty($_POST)) {
+                if (isset($_GET['from'])) {
+                    switch ($_GET['from']) {
+                        case 'search':
+                            break;
+                        case 'filter':
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
             //get offer data
             $OffreModel = new OffreModel();
             $datas = $OffreModel->readAll();
@@ -99,11 +117,17 @@ class AuthController
 
         if ($this->userLogin->isLoggedIn()) {
 
-            $currentUser = $this->userLogin->getCurrentUser()['username'];
+            //if form submit
+            if (!empty($_POST) && isset($_GET['from']) && $_GET['from'] == 'profil') {
+            }
 
+            $connectedUser = $this->userLogin;
             $datas = $this->userLogin->getCurrentUser();
+            $currentUser = $datas['username'];
 
-            if($datas === null){echo "error";}
+            if ($datas === null) {
+                echo "error";
+            }
 
             $user = new User($datas);
 

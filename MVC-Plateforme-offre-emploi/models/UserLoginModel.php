@@ -13,17 +13,35 @@ class UserLoginModel extends CoreModel
 
     public function login($username, $password)
     {
-        $query = "SELECT * FROM users WHERE username = :username";
+        $query = "SELECT users.id AS id,
+         users.password AS password,
+         users.email AS email,
+         last_login,
+         role.label AS role 
+         FROM users 
+         JOIN role ON role_id_fk = role.id 
+         WHERE username = :username";
         $this->_req = $this->getDb()->prepare($query);
         $this->_req->execute(['username' => $username]);
         $this->_user = $this->_req->fetch(PDO::FETCH_ASSOC);
-
+        $this->_req->closeCursor();
+        
         if ($this->_user && password_verify($password, $this->_user['password'])) {
             $_SESSION['user_id'] = $this->_user['id'];
-            $_SESSION['role'] = $this->_user['role_id_fk'];
+            $_SESSION['role'] = $this->_user['role'];
             return true;
         }
         return false;
+    }
+
+    public function lastLoginUpdate($username)
+    {
+        $query = "UPDATE users
+         SET last_login = DEFAULT
+         WHERE username = :username";
+        $this->_req = $this->getDb()->prepare($query);
+        $this->_req->execute(['username' => $username]);
+        $this->_req->closeCursor();
     }
 
     public function signup($username, $email, $password, $specialite, $entreprise)
@@ -78,6 +96,11 @@ class UserLoginModel extends CoreModel
         return isset($_SESSION['user_id']);
     }
 
+    public function getRole()
+    {
+        return $_SESSION['role'];
+    }
+
     public function getCurrentUser()
     {
         if ($this->isLoggedIn()) {
@@ -98,4 +121,6 @@ class UserLoginModel extends CoreModel
         }
         return null;
     }
+
+    public function updateUserProfil() {}
 }
