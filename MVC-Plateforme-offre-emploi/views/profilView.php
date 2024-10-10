@@ -1,4 +1,4 @@
-<?php 
+<?php
 $page = 'Profil';
 include 'views/partials/head.php';
 ?>
@@ -22,13 +22,46 @@ include 'views/partials/head.php';
 </div>
 <div class="section">
     <h2 class="title text-color">Profil</h2>
-    <div class="columns">
-       <div class="column"><?=$user->getId()?></div> 
-       <div class="column"><?=$user->getUsername()?></div> 
-       <div class="column"><?=$user->getEmail()?></div> 
-       <div class="column"><?=$user->getLast_login()?></div> 
-       <div class="column"><?=$user->getRole()?></div> 
-       <div class="column"><?=$user->getSpecialite()?></div> 
+    <div class="columns is-variable is-3">
+        <div class="column is-3">
+            <div class="card">
+                <div class="card-content">
+                    <div class="content">
+                        <div class="column">User ID
+                            <p class="text-color"><?= $user->getId() ?></p>
+                        </div>
+                        <div class="column">Username
+                            <p class="text-color"><?= $user->getUsername() ?></p>
+                        </div>
+                        <div class="column">Email
+                            <p class="text-color"><?= $user->getEmail() ?></p>
+                        </div>
+                        <div class="column">Dernière Connexion
+                            <p class="text-color"><?= $user->getLast_login() ?></p>
+                        </div>
+                        <div class="column">Inscrit en tant que
+                            <p class="text-color"><?= $user->getRole() ?></p>
+                        </div>
+                        <div class="column">Spécialité
+                            <p class="text-color"><?= $user->getSpecialite() ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card">
+                <div class="card-content">
+                    <div class="content">
+                        <div class="text-color">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
