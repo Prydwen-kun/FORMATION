@@ -1,14 +1,40 @@
+<script>
+    function nav_menu() {
+        let menu = document.getElementById("aside_menu")
+        let burger_button = document.getElementById("burger_button")
+
+        if (menu.classList.contains('is-block')) {
+            menu.classList.toggle('is-none')
+            menu.classList.toggle('is-block')
+            burger_button.innerHTML = '>'
+        } else if (menu.classList.contains('is-none')) {
+            menu.classList.toggle('is-block')
+            menu.classList.toggle('is-none')
+            burger_button.innerHTML = '<'
+        }
+
+        console.log("nav func used")
+
+    }
+</script>
 <aside class="menu text-color back-dark column">
-    <p class="menu-label title is-3 text-color"><?= $currentUser ?></p>
-    <p class="menu-label title">connected</p>
-    <ul class="menu-list text-color">
-        <li class="text-color mb-2"><a class="text-color" href="index.php?ctrl=auth&action=dashboard">Liste des offres</a></li>
-        <li class="text-color mb-2"><a class="text-color" href="index.php?ctrl=auth&action=profil">Profil</a></li>
-        <li class="text-color mb-2"><a class="text-color" href="index.php?ctrl=auth&action=candidature">Suivre Candidature</a></li>
-    </ul>
+    <div class="is-size-6 button is-fullwidth text-color" id="burger_button" onclick="nav_menu()"><</div>
+
+            <div id="aside_menu" class="is-block">
+                <p class="menu-label title is-3 text-color"><?= $currentUser ?></p>
+                <p class="menu-label title">connected</p>
+                <ul class="menu-list text-color">
+                    <li class="text-color mb-2"><a class="text-color" href="index.php?ctrl=auth&action=dashboard">Liste des offres</a></li>
+                    <li class="text-color mb-2"><a class="text-color" href="index.php?ctrl=auth&action=profil">Profil</a></li>
+                    <li class="text-color mb-2"><a class="text-color" href="index.php?ctrl=auth&action=candidature">Suivre Candidature</a></li>
+                </ul>
+            </div>
 </aside>
 
 <style>
+    .is-none {
+        display: none;
+    }
     .menu {
         height: 100vh;
         position: fixed;
