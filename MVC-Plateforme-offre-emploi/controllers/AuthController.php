@@ -186,15 +186,34 @@ class AuthController
         }
     }
 
-    public function user(){
+    public function user()
+    {
         if ($this->userLogin->isLoggedIn() && $this->userLogin->getRole() == 'admin') {
 
             $connectedUser = $this->userLogin;
             $datas = $this->userLogin->getCurrentUser();
             $currentUser = $datas['username'];
 
+
+            if (isset($_GET['user']) && is_numeric($_GET['user'])) {
+                $userToGet = $_GET['user'];
+                $userData = $this->userLogin->readUser($userToGet);
+                $user = new User($userData);
+            }
+
             //user read one
             //new user
+
+            if (!empty($_POST) && isset($_GET['from']) && $_GET['from'] == 'user_update') {
+                $post = $_POST;
+                if (isset($_GET['user']) && is_numeric($_GET['user'])) {
+                    //update user
+                    $this->userLogin->updateUserProfil($user, $post, true);
+                    header('Location: index.php?ctrl=auth&action=user&from=profil_update&user=' . $user->getId());
+                } else {
+                    require 'views/403View.php';
+                }
+            }
 
             if (isset($_GET['from']) && $_GET['from'] == 'profil_update') {
                 $update = "Profil updated";

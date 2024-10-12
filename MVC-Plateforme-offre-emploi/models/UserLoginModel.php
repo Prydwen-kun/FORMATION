@@ -125,7 +125,7 @@ class UserLoginModel extends CoreModel
         return null;
     }
 
-    public function updateUserProfil($user, $post)
+    public function updateUserProfil($user, $post, $UPDATE = false)
     {
 
         foreach ($post as $key => $user_value) {
@@ -161,7 +161,12 @@ class UserLoginModel extends CoreModel
         spe_id_fk =:specialite
         WHERE id= :id";
         $this->_req = $this->getDb()->prepare($query);
-        $this->_req->bindValue('id', $_SESSION['user_id'], PDO::PARAM_STR);
+        if ($UPDATE) {
+            $this->_req->bindValue('id', $user->getId(), PDO::PARAM_STR);
+        } else {
+            $this->_req->bindValue('id', $_SESSION['user_id'], PDO::PARAM_STR);
+        }
+
         $this->_req->bindValue('username', $username, PDO::PARAM_STR);
         $this->_req->bindValue("email", $email, PDO::PARAM_STR);
         $this->_req->bindValue("password", password_hash($password, PASSWORD_BCRYPT), PDO::PARAM_STR);
@@ -169,6 +174,27 @@ class UserLoginModel extends CoreModel
         $this->_req->bindValue("entreprise", $entreprise, PDO::PARAM_INT);
         $this->_req->execute();
         $this->_req->closeCursor();
+    }
+
+    public function readUser($user_id)
+    {
+        $query =
+            "SELECT users.id AS id,
+                username,
+                password,
+                email,
+                last_login,
+                users.role_id_fk AS role_id,
+                role.label AS role,
+                users.spe_id_fk AS spe_id,
+                specialite.label AS specialite
+            FROM users
+            LEFT JOIN role ON role_id_fk = role.id
+            LEFT JOIN specialite ON spe_id_fk = specialite.id 
+            WHERE users.id = :id";
+        $this->_req = $this->getDb()->prepare($query);
+        $this->_req->execute(['id' => $user_id]);
+        return $this->_req->fetch(PDO::FETCH_ASSOC);
     }
 
     public function readAllUsers($orderBy, $limit): array

@@ -82,7 +82,7 @@ include 'views/partials/head.php';
                             <td><?= $user->getLast_login() ?></td>
                             <td><?= $user->getRole() ?></td>
                             <td><?= $user->getSpecialite() ?></td>
-                            <td><a href="index.php?ctrl=auth&action=user" class="button text-color">Modifier</a></td>
+                            <td><a href="index.php?ctrl=auth&action=user&user=<?=$user->getId()?>" class="button text-color">Modifier</a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

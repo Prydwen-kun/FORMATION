@@ -21,7 +21,10 @@ include 'views/partials/head.php';
     </nav>
 </div>
 <div class="section">
-    <h2 class="title text-color">Profil</h2>
+    <h2 class="title text-color columns">
+        <span class="column is-3">User Profil</span>
+        <span class="column has-text-centered">Modification</span>
+    </h2>
     <div class="columns is-variable is-3">
         <div class="column is-3">
             <div class="card">
@@ -55,7 +58,7 @@ include 'views/partials/head.php';
                 <div class="card-content">
                     <div class="content">
                         <div class="text-color">
-                            <form class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center" action="index.php?ctrl=auth&action=user&from=user" method="POST">
+                            <form class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center" action="index.php?ctrl=auth&action=user&from=user_update&user=<?= $user->getId() ?>" method="POST">
                                 <div>
                                     <div class="field mb-6 has-text-right">
                                         <label class="label text-color is-inline" for="username">Username</label>
@@ -88,9 +91,9 @@ include 'views/partials/head.php';
                                         <label class="label text-color is-inline" for="entreprise">Catégorie</label>
                                         <div class="select">
                                             <select name="entreprise" id="entreprise">
-                                                <option value="1" selected>Admin</option>
-                                                <option value="2">Entreprise</option>
-                                                <option value="3">Etudiant</option>
+                                                <option value="1" <?= $user->getRole_id() == 1 ? 'selected' : '' ?>>Admin</option>
+                                                <option value="2" <?= $user->getRole_id() == 2 ? 'selected' : '' ?>>Entreprise</option>
+                                                <option value="3" <?= $user->getRole_id() == 3 ? 'selected' : '' ?>>Etudiant</option>
                                             </select>
                                         </div>
                                     </div>
