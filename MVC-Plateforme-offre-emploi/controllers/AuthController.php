@@ -77,7 +77,7 @@ class AuthController
 
         if ($this->userLogin->isLoggedIn()) {
 
-            $filterDefault = 'title';
+            $filterDefault = 'titre';
             $nbOffreDefault = 20;
 
             $connectedUser = $this->userLogin;
@@ -89,6 +89,8 @@ class AuthController
                         case 'search':
                             break;
                         case 'filter':
+                            $filterDefault = isset($_POST['filter']) ? $_POST['filter'] : 'id';
+                            $nbUserDefault = isset($_POST['pagination']) ? $_POST['pagination'] : 20;
                             break;
                         default:
                             break;
@@ -98,7 +100,7 @@ class AuthController
 
             //get offer data
             $OffreModel = new OffreModel();
-            $datas = $OffreModel->readAll();
+            $datas = $OffreModel->readAll($filterDefault,$nbOffreDefault);
 
             foreach ($datas as $data) {
                 $Offres[] = new Offre($data);

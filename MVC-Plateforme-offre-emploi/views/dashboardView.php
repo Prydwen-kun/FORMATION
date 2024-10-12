@@ -50,7 +50,8 @@ include 'views/partials/head.php';
                     <select name="filter" id="filter" onchange="filterUpdate()">
                         <option value="">Select an option</option>
                         <option value="titre">Titre</option>
-                        <option value="salaire">Salaire</option>
+                        <option value="salaireASC">Salaire croissant</option>
+                        <option value="salaireDESC">Salaire décroissant</option>
                         <option value="entreprise">Entreprise</option>
                     </select>
                 </div>
