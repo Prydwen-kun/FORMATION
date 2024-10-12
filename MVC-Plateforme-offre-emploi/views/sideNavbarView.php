@@ -18,7 +18,8 @@
     }
 </script>
 <aside class="menu text-color back-dark column">
-    <div class="is-size-6 button is-fullwidth text-color" id="burger_button" onclick="nav_menu()"><</div>
+    <div class="is-size-6 button is-fullwidth text-color" id="burger_button" onclick="nav_menu()">
+        <</div>
 
             <div id="aside_menu" class="is-block">
                 <p class="menu-label title is-3 text-color"><?= $currentUser ?></p>
@@ -27,6 +28,12 @@
                     <li class="text-color mb-2"><a class="text-color" href="index.php?ctrl=auth&action=dashboard">Liste des offres</a></li>
                     <li class="text-color mb-2"><a class="text-color" href="index.php?ctrl=auth&action=profil">Profil</a></li>
                     <li class="text-color mb-2"><a class="text-color" href="index.php?ctrl=auth&action=candidature">Suivre Candidature</a></li>
+                    <?php if ($connectedUser->getRole() == 'admin' || $connectedUser->getRole() == 'entreprise'): ?>
+                        <li class="text-color mb-2"><a class="text-color" href="index.php?ctrl=auth&action=create_offer">Créer offre</a></li>
+                    <?php endif; ?>
+                    <?php if ($connectedUser->getRole() == 'admin'): ?>
+                    <li class="text-color mb-2"><a class="text-color" href="index.php?ctrl=auth&action=admin">Gérer Users</a></li>
+                    <?php endif; ?>
                 </ul>
             </div>
 </aside>
@@ -35,6 +42,7 @@
     .is-none {
         display: none;
     }
+
     .menu {
         height: 100vh;
         position: fixed;

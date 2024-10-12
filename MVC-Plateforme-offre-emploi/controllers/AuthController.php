@@ -79,6 +79,8 @@ class AuthController
 
             $filterDefault = 'title';
             $nbOffreDefault = 20;
+
+            $connectedUser = $this->userLogin;
             //if post not empty use for search and filter
             //dans offreModel readAll orderBY filter et limit par nb max + pagination
             if (!empty($_POST)) {
@@ -117,10 +119,6 @@ class AuthController
 
         if ($this->userLogin->isLoggedIn()) {
 
-            //if form submit
-            if (!empty($_POST) && isset($_GET['from']) && $_GET['from'] == 'profil') {
-            }
-
             $connectedUser = $this->userLogin;
             $datas = $this->userLogin->getCurrentUser();
             $currentUser = $datas['username'];
@@ -131,9 +129,79 @@ class AuthController
 
             $user = new User($datas);
 
+            //if form submit
+            if (!empty($_POST) && isset($_GET['from']) && $_GET['from'] == 'profil') {
+                $post = $_POST;
+                $this->userLogin->updateUserProfil($user, $post);
+                header('Location: index.php?ctrl=auth&action=profil&from=profil_update');
+            }
+
+            if (isset($_GET['from']) && $_GET['from'] == 'profil_update') {
+                $update = "Profil updated";
+            }
 
             require 'views/sideNavbarView.php';
             require 'views/profilView.php';
+        } else {
+            header('Location: index.php?ctrl=auth&action=error403');
+        }
+    }
+
+    public function admin()
+    {
+
+        if ($this->userLogin->isLoggedIn() && $this->userLogin->getRole() == 'admin') {
+
+            $filterDefault = 'id';
+            $nbUserDefault = 20;
+            $connectedUser = $this->userLogin;
+            $datas = $this->userLogin->getCurrentUser();
+            $currentUser = $datas['username'];
+
+            if (!empty($_POST)) {
+                if (isset($_GET['from'])) {
+                    switch ($_GET['from']) {
+                        case 'search':
+                            break;
+                        case 'filter':
+                            $filterDefault = isset($_POST['filter']) ? $_POST['filter'] : 'id';
+                            $nbUserDefault = isset($_POST['pagination']) ? $_POST['pagination'] : 20;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            $users = $this->userLogin->readAllUsers($filterDefault, $nbUserDefault);
+
+            foreach ($users as $user) {
+                $userArray[] = new User($user);
+            }
+
+            require 'views/sideNavbarView.php';
+            require 'views/adminView.php';
+        } else {
+            header('Location: index.php?ctrl=auth&action=error403');
+        }
+    }
+
+    public function user(){
+        if ($this->userLogin->isLoggedIn() && $this->userLogin->getRole() == 'admin') {
+
+            $connectedUser = $this->userLogin;
+            $datas = $this->userLogin->getCurrentUser();
+            $currentUser = $datas['username'];
+
+            //user read one
+            //new user
+
+            if (isset($_GET['from']) && $_GET['from'] == 'profil_update') {
+                $update = "Profil updated";
+            }
+
+            require 'views/sideNavbarView.php';
+            require 'views/userView.php';
         } else {
             header('Location: index.php?ctrl=auth&action=error403');
         }

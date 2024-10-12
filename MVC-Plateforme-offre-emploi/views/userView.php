@@ -1,5 +1,5 @@
 <?php
-$page = 'Profil';
+$page = 'User Profil';
 include 'views/partials/head.php';
 ?>
 
@@ -55,7 +55,7 @@ include 'views/partials/head.php';
                 <div class="card-content">
                     <div class="content">
                         <div class="text-color">
-                            <form class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center" action="index.php?ctrl=auth&action=profil&from=profil" method="POST">
+                            <form class="is-flex is-flex-direction-column is-justify-content-center is-align-items-center" action="index.php?ctrl=auth&action=user&from=user" method="POST">
                                 <div>
                                     <div class="field mb-6 has-text-right">
                                         <label class="label text-color is-inline" for="username">Username</label>
@@ -84,20 +84,16 @@ include 'views/partials/head.php';
                                             </select>
                                         </div>
                                     </div>
-                                    <?php if ($connectedUser->getRole() == 'admin'): ?>
-                                        <div class="field mb-6 has-text-right">
-                                            <label class="label text-color is-inline" for="entreprise">Catégorie</label>
-                                            <div class="select">
-                                                <select name="entreprise" id="entreprise">
-                                                    <option value="1" selected>Admin</option>
-                                                    <option value="2">Entreprise</option>
-                                                    <option value="3">Etudiant</option>
-                                                </select>
-                                            </div>
+                                    <div class="field mb-6 has-text-right">
+                                        <label class="label text-color is-inline" for="entreprise">Catégorie</label>
+                                        <div class="select">
+                                            <select name="entreprise" id="entreprise">
+                                                <option value="1" selected>Admin</option>
+                                                <option value="2">Entreprise</option>
+                                                <option value="3">Etudiant</option>
+                                            </select>
                                         </div>
-                                    <?php else: ?>
-                                        <input type="hidden" name="entreprise" value="<?= $user->getRole_id() ?>">
-                                    <?php endif; ?>
+                                    </div>
                                     <div class="field mb-2">
                                         <div class="control has-text-centered">
                                             <button class="button is-primary button-color button-text-color" type="submit">SAVE</button>
