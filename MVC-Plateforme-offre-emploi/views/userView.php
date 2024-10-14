@@ -27,25 +27,25 @@ include 'views/partials/head.php';
     </h2>
     <div class="columns is-variable is-3">
         <div class="column is-3">
-            <div class="card">
+            <div class="card background">
                 <div class="card-content">
                     <div class="content">
-                        <div>User ID
+                        <div class="user-mod-td">User ID
                             <p class="text-color"><?= $user->getId() ?></p>
                         </div>
-                        <div>Username
+                        <div class="user-mod-td">Username
                             <p class="text-color"><?= $user->getUsername() ?></p>
                         </div>
-                        <div>Email
+                        <div class="user-mod-td">Email
                             <p class="text-color"><?= $user->getEmail() ?></p>
                         </div>
-                        <div>Dernière Connexion
+                        <div class="user-mod-td">Dernière Connexion
                             <p class="text-color"><?= $user->getLast_login() ?></p>
-                        </div>
-                        <div>Inscrit en tant que
+                        </div class="user-mod-td">
+                        <div class="user-mod-td">Inscrit en tant que
                             <p class="text-color"><?= strtoupper($user->getRole()) ?></p>
                         </div>
-                        <div>Spécialité
+                        <div class="user-mod-td">Spécialité
                             <p class="text-color"><?= $user->getSpecialite() == null ? 'Aucune spécialité' : $user->getSpecialite() ?></p>
                         </div>
                     </div>
@@ -54,7 +54,7 @@ include 'views/partials/head.php';
         </div>
 
         <div class="column">
-            <div class="card">
+            <div class="card background">
                 <div class="card-content">
                     <div class="content">
                         <div class="text-color">
@@ -120,3 +120,18 @@ include 'views/partials/head.php';
 </div>
 
 <?php include 'views/partials/foot.php'; ?>
+
+<style>
+    #user-modification {
+        background-color: var(--background) !important;
+        color: var(--text-color);
+    }
+
+    .admin-table {
+        color: var(--text-color) !important;
+    }
+
+    .user-mod-td {
+        color: aliceblue !important;
+    }
+</style>

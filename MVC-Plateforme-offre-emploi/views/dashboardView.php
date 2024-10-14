@@ -72,10 +72,10 @@ include 'views/partials/head.php';
                             <div class="content">
                                 <p class="text-color text-overflow-wrap is-inline"><?= $offre->getContent() ?></p>
                             </div>
-                            <div class="content">Salaire :
+                            <div class="content user-mod-td">Salaire :
                                 <p class="text-color is-inline"><?= $offre->getSalaire() ?></p>
                             </div>
-                            <div class="content">Adresse :
+                            <div class="content user-mod-td">Adresse :
                                 <p class="text-color is-inline"><?= $offre->getLocalisation() ?></p>
                             </div>
                             <!-- <div class="content"><?php //$offre->getCover() 
@@ -90,3 +90,14 @@ include 'views/partials/head.php';
 <!-- Main content goes here -->
 
 <?php include 'views/partials/foot.php'; ?>
+
+<style>
+    
+    .admin-table {
+        color: var(--text-color) !important;
+    }
+
+    .user-mod-td {
+        color: aliceblue !important;
+    }
+</style>

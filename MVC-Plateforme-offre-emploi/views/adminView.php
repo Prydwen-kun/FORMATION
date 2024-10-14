@@ -60,29 +60,29 @@ include 'views/partials/head.php';
 
     <div class="columns">
 
-        <div class="back-dark text-color column">
-            <table class="table card is-fullwidth">
+        <div class="back-dark column">
+            <table class="table card is-fullwidth" id="admin-table">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Last Login</th>
-                        <th>Rôle</th>
-                        <th>Specialité</th>
+                        <th class="admin-table">Id</th>
+                        <th class="admin-table">Username</th>
+                        <th class="admin-table">Email</th>
+                        <th class="admin-table">Last Login</th>
+                        <th class="admin-table">Rôle</th>
+                        <th class="admin-table">Specialité</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($userArray as $user): ?>
                         <tr>
-                            <td><?= $user->getId() ?></td>
-                            <td><?= $user->getUsername() ?></td>
-                            <td><?= $user->getEmail() ?></td>
-                            <td><?= $user->getLast_login() ?></td>
-                            <td><?= $user->getRole() ?></td>
-                            <td><?= $user->getSpecialite() ?></td>
-                            <td><a href="index.php?ctrl=auth&action=user&user=<?=$user->getId()?>" class="button text-color">Modifier</a></td>
+                            <td class="admin-table-td"><?= $user->getId() ?></td>
+                            <td class="admin-table-td"><?= $user->getUsername() ?></td>
+                            <td class="admin-table-td"><?= $user->getEmail() ?></td>
+                            <td class="admin-table-td"><?= $user->getLast_login() ?></td>
+                            <td class="admin-table-td"><?= $user->getRole() ?></td>
+                            <td class="admin-table-td"><?= $user->getSpecialite() ?></td>
+                            <td class="admin-table-td"><a href="index.php?ctrl=auth&action=user&user=<?= $user->getId() ?>" class="button text-color">Modifier</a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -94,3 +94,18 @@ include 'views/partials/head.php';
 <!-- Main content goes here -->
 
 <?php include 'views/partials/foot.php'; ?>
+
+<style>
+    #admin-table {
+        background-color: var(--background) !important;
+        color: var(--text-color);
+    }
+
+    .admin-table {
+        color: var(--text-color) !important;
+    }
+
+    .admin-table-td {
+        color: aliceblue !important;
+    }
+</style>
