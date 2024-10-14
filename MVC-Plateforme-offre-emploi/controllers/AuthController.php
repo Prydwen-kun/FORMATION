@@ -394,7 +394,7 @@ class AuthController
             if (!empty($_POST) && isset($_GET['from']) && $_GET['from'] == 'offer_update') {
                 $post = $_POST;
                 if (isset($_GET['offre']) && is_numeric($_GET['offre'])) {
-                    if ($offreModel->updateOffre($post,$_GET['offre'])) {
+                    if ($offreModel->updateOffre($post, $_GET['offre'])) {
 
                         header('Location: index.php?ctrl=auth&action=offreModif&from=offer_update&offre=' . $offre->getId());
                     } else {
@@ -410,6 +410,21 @@ class AuthController
             }
 
             require 'views/OffresModifView/OffreView.php';
+            require 'views/sideNavbarView.php';
+        } else {
+            header('Location: index.php?ctrl=auth&action=error403');
+        }
+    }
+
+    public function candidature()
+    {
+        if ($this->userLogin->isLoggedIn() && $this->userLogin->getRole() == 'entreprise') {
+            $offreModel = new OffreModel();
+
+            $connectedUser = $this->userLogin;
+            $datas = $this->userLogin->getCurrentUser();
+            $currentUser = $datas['username'];
+            require 'views/CandidatureView/candidatureView.php';
             require 'views/sideNavbarView.php';
         } else {
             header('Location: index.php?ctrl=auth&action=error403');
