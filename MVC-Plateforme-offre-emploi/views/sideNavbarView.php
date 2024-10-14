@@ -27,8 +27,10 @@
                 <ul class="menu-list text-color">
                     <li class="text-color mb-2"><a class="text-color background" href="index.php?ctrl=auth&action=dashboard">Liste des offres</a></li>
                     <li class="text-color mb-2"><a class="text-color background" href="index.php?ctrl=auth&action=profil">Profil</a></li>
+                    <?php if ($connectedUser->getRole() == 'etudiant' || $connectedUser->getRole() == 'entreprise'): ?>
                     <li class="text-color mb-2"><a class="text-color background" href="index.php?ctrl=auth&action=candidature">Suivre Candidature</a></li>
-                    <?php if ($connectedUser->getRole() == 'admin' || $connectedUser->getRole() == 'entreprise'): ?>
+                    <?php endif; ?>
+                    <?php if ($connectedUser->getRole() == 'entreprise'): ?>
                         <li class="text-color mb-2"><a class="text-color background" href="index.php?ctrl=auth&action=create_offer">Créer offre</a></li>
                     <?php endif; ?>
                     <?php if ($connectedUser->getRole() == 'admin'): ?>

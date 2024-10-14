@@ -100,10 +100,19 @@ class AuthController
 
             //get offer data
             $OffreModel = new OffreModel();
-            $datas = $OffreModel->readAll($filterDefault,$nbOffreDefault);
+            $datas = $OffreModel->readAll($filterDefault, $nbOffreDefault);
 
             foreach ($datas as $data) {
                 $Offres[] = new Offre($data);
+            }
+
+            $skillModel = new SkillModel();
+            $requiredSkills = [];
+            foreach ($Offres as $offre) {
+
+                $offerSkill = $skillModel->getSkillFromOffer($offre->getId());
+
+                $requiredSkills[$offre->getId()] = $offerSkill;
             }
 
             $currentUser = $this->userLogin->getCurrentUser()['username'];
@@ -111,6 +120,12 @@ class AuthController
             //affiche dashboardView
             require 'views/sideNavbarView.php';
             require 'views/dashboardView.php';
+
+            if (isset($_GET['delete']) && $_GET['delete'] == 'success') {
+                require 'views/offreDeleteSuccess.php';
+            } else if (isset($_GET['delete']) && $_GET['delete'] == 'failure') {
+                require 'views/idNotValidError.php';
+            }
         } else {
             header('Location: index.php?ctrl=auth&action=error403');
         }
@@ -223,6 +238,61 @@ class AuthController
 
             require 'views/sideNavbarView.php';
             require 'views/userView.php';
+        } else {
+            header('Location: index.php?ctrl=auth&action=error403');
+        }
+    }
+
+    public function delete_offer()
+    {
+        if ($this->userLogin->isLoggedIn() && $this->userLogin->getRole() == 'admin') {
+
+            $offreModel = new OffreModel();
+            if (isset($_GET['offre']) && is_numeric($_GET['offre'])) {
+                $offre_id = $_GET['offre'];
+                if ($offreModel->delete($offre_id)) {
+                    header('Location: index.php?ctrl=auth&action=dashboard&delete=success');
+                } else {
+                    header('Location: index.php?ctrl=auth&action=dashboard&delete=failure');
+                }
+            }
+        }
+    }
+
+    public function create_offer()
+    {
+        if ($this->userLogin->isLoggedIn() && $this->userLogin->getRole() == 'entreprise') {
+
+            $offreModel = new OffreModel();
+
+            $connectedUser = $this->userLogin;
+            $datas = $this->userLogin->getCurrentUser();
+            $currentUser = $datas['username'];
+
+            $skillModel = new SkillModel();
+            $skillDatas = $skillModel->readAll();
+            $skills = [];
+            foreach ($skillDatas as $skillData) {
+                $skills[] = new Skill($skillData);
+            }
+
+            if (!empty($_POST) && isset($_GET['from']) && $_GET['from'] == 'create_offer') {
+                $post = $_POST;
+
+                if ($offreModel->createOffer($this->userLogin->getCurrentUserId(), $post, $skills)) {
+
+                    header('Location: index.php?ctrl=auth&action=create_offer&from=offer_created');
+                } else {
+                    $update = "Erreur création d'offre";
+                }
+            }
+
+            if (isset($_GET['from']) && $_GET['from'] == 'offer_created') {
+                $update = "Offre créée";
+            }
+
+            require 'views/createOfferView.php';
+            require 'views/sideNavbarView.php';
         } else {
             header('Location: index.php?ctrl=auth&action=error403');
         }

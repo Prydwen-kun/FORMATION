@@ -64,7 +64,11 @@ include 'views/partials/head.php';
             <div class="back-dark text-color column is-4">
                 <div class="card background text-color p-2 offer-maxHeight" style="background-image: url(<?= $offre->getCover() ?>); background-size:cover;background-position:center;background-repeat:no-repeat;">
                     <div class="card-content">
-                        <div class="content title is-4 text-color"><?= ucfirst($offre->getTitle()) ?> par <?= $offre->getAuteur() ?>
+                        <?php if ($connectedUser->getRole() == 'admin'): ?>
+                            <a href="index.php?ctrl=auth&action=delete_offer&offre=<?= $offre->getId() ?>" class="user-mod-td delete-button mr-4 is-inline button">X</a>
+                        <?php endif; ?>
+                        <div class="content title is-4 text-color is-inline"><?= ucfirst($offre->getTitle()) ?> par <?= $offre->getAuteur() ?>
+
                         </div>
                     </div>
                     <div class="card card-content backcolor-50">
@@ -78,8 +82,16 @@ include 'views/partials/head.php';
                             <div class="content user-mod-td">Adresse :
                                 <p class="text-color is-inline"><?= $offre->getLocalisation() ?></p>
                             </div>
-                            <!-- <div class="content"><?php //$offre->getCover() 
-                                                        ?></div> -->
+                            <div class="content user-mod-td">
+                                <?php if (!empty($requiredSkills[$offre->getId()])): ?>
+                                    Required Skills :
+                                <?php endif; ?>
+                                <?php foreach ($requiredSkills[$offre->getId()] as $key => $value): ?>
+                                    <?php foreach ($value as $skill): ?>
+                                        <p class="text-color is-inline"><?= $skill ?></p>
+                                    <?php endforeach; ?>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -92,7 +104,10 @@ include 'views/partials/head.php';
 <?php include 'views/partials/foot.php'; ?>
 
 <style>
-    
+    .delete-button {
+        background-color: red !important;
+    }
+
     .admin-table {
         color: var(--text-color) !important;
     }

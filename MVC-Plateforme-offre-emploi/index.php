@@ -1,7 +1,8 @@
 <?php
+session_start();
 require_once 'config/config.php';
 require_once 'lib/autoloader.php';
-session_start();
+
 // require 'views/partials/head.php';
 
 // Your main application logic goes here
