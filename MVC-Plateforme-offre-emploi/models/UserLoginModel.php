@@ -297,4 +297,30 @@ class UserLoginModel extends CoreModel
                 break;
         }
     }
+
+    public function deleteUser($id)
+    {
+        $sql = "DELETE
+        FROM required_skills
+        WHERE offre_id_fk IN (SELECT id FROM offres WHERE auteur_id =:id);
+        DELETE
+        FROM offres
+        WHERE auteur_id =:id;
+        DELETE
+        FROM users
+        WHERE users.id =:id
+        ";
+
+        try {
+            if (($this->_req = $this->getDb()->prepare($sql)) !== false) {
+                $this->_req->bindParam('id', $id, PDO::PARAM_INT);
+                if ($this->_req->execute()) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
 }

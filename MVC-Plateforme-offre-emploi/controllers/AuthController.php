@@ -190,6 +190,13 @@ class AuthController
                 }
             }
 
+            if (isset($_GET['user']) && is_numeric($_GET['user'])) {
+                $this->userLogin->deleteUser($_GET['user']);
+                header('Location: index.php?ctrl=auth&action=admin&user=deleted');
+            } else if (isset($_GET['user']) && $_GET['user'] == 'deleted') {
+                require 'views/userDelete200.php';
+            }
+
             $users = $this->userLogin->readAllUsers($filterDefault, $nbUserDefault);
 
             foreach ($users as $user) {
@@ -292,6 +299,117 @@ class AuthController
             }
 
             require 'views/createOfferView.php';
+            require 'views/sideNavbarView.php';
+        } else {
+            header('Location: index.php?ctrl=auth&action=error403');
+        }
+    }
+
+    public function my_offer()
+    {
+        if ($this->userLogin->isLoggedIn() && $this->userLogin->getRole() == 'entreprise') {
+            $filterDefault = 'titre';
+            $nbUserDefault = 20;
+            $offreModel = new OffreModel();
+
+            $connectedUser = $this->userLogin;
+            $datas = $this->userLogin->getCurrentUser();
+            $currentUser = $datas['username'];
+            $currentUserID = $datas['id'];
+
+            $skillModel = new SkillModel();
+            $skillDatas = $skillModel->readAll();
+            $skills = [];
+            foreach ($skillDatas as $skillData) {
+                $skills[] = new Skill($skillData);
+            }
+
+            if (!empty($_POST)) {
+                if (isset($_GET['from'])) {
+                    switch ($_GET['from']) {
+                        case 'search':
+                            break;
+                        case 'filter':
+                            $filterDefault = isset($_POST['filter']) ? $_POST['filter'] : 'id';
+                            $nbUserDefault = isset($_POST['pagination']) ? $_POST['pagination'] : 20;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            if (isset($_GET['offre']) && is_numeric($_GET['offre'])) {
+                $offre_id = $_GET['offre'];
+                if ($offreModel->delete($offre_id)) {
+                    header('Location: index.php?ctrl=auth&action=my_offer&delete=success');
+                } else {
+                    header('Location: index.php?ctrl=auth&action=my_offer&delete=failure');
+                }
+            }
+
+            if (isset($_GET['delete']) && $_GET['delete'] == 'success') {
+                require 'views/offreDeleteSuccess.php';
+            } else if (isset($_GET['delete']) && $_GET['delete'] == 'failure') {
+                require 'views/idNotValidError.php';
+            }
+
+            $user_offre_data = $offreModel->readOfferFromUser($currentUserID, $filterDefault, $nbUserDefault);
+
+            foreach ($user_offre_data as $offre_data) {
+                $my_offres[] = new Offre($offre_data);
+            }
+
+            require 'views/myOffreView.php';
+            require 'views/sideNavbarView.php';
+        } else {
+            header('Location: index.php?ctrl=auth&action=error403');
+        }
+    }
+
+    public function offreModif()
+    {
+        if ($this->userLogin->isLoggedIn() && $this->userLogin->getRole() == 'entreprise') {
+
+            $offreModel = new OffreModel();
+
+            $connectedUser = $this->userLogin;
+            $datas = $this->userLogin->getCurrentUser();
+            $currentUser = $datas['username'];
+
+            $skillModel = new SkillModel();
+            $skillDatas = $skillModel->readAll();
+            $skills = [];
+            foreach ($skillDatas as $skillData) {
+                $skills[] = new Skill($skillData);
+            }
+
+            if (isset($_GET['offre']) && is_numeric($_GET['offre'])) {
+                $offerToGet = $_GET['offre'];
+                $offreData = $offreModel->readOffre($offerToGet);
+                $offre = new Offre($offreData);
+            }
+
+
+            if (!empty($_POST) && isset($_GET['from']) && $_GET['from'] == 'offer_update') {
+                $post = $_POST;
+                if (isset($_GET['offre']) && is_numeric($_GET['offre'])) {
+                    if ($offreModel->updateOffre($post,$_GET['offre'])) {
+
+                        header('Location: index.php?ctrl=auth&action=offreModif&from=offer_update&offre=' . $offre->getId());
+                    } else {
+                        $update = "Erreur update offre";
+                    }
+                } else {
+                    require 'views/403View.php';
+                }
+            }
+
+            if (isset($_GET['from']) && $_GET['from'] == 'offer_update') {
+                $update = "Offre Modifiée";
+            }
+
+            require 'views/OffresModifView/OffreView.php';
             require 'views/sideNavbarView.php';
         } else {
             header('Location: index.php?ctrl=auth&action=error403');

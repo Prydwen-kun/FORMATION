@@ -1,5 +1,5 @@
 <?php
-$page = 'Espace Admin';
+$page = 'Mes Offres';
 include 'views/partials/head.php';
 ?>
 <div class="m-2">
@@ -35,8 +35,8 @@ include 'views/partials/head.php';
 </div>
 <div class="section">
     <div class="columns">
-        <h2 class="title text-color column">Espace Admin</h2>
-        <form action="index.php?ctrl=auth&action=admin&from=filter" method="POST" class="column has-text-right" id="formFilter">
+        <h2 class="title text-color column">Mes Offres</h2>
+        <form action="index.php?ctrl=auth&action=my_offer&from=filter" method="POST" class="column has-text-right" id="formFilter">
             <div class="field">
                 <label for="filter" class="text-color is-size-4">Filter by</label>
                 <div class="select">
@@ -49,9 +49,10 @@ include 'views/partials/head.php';
                     </script>
                     <select name="filter" id="filter" onchange="filterUpdate()">
                         <option value="">Select an option</option>
+                        <option value="titre">Titre</option>
+                        <option value="salaireASC">Salaire croissant</option>
+                        <option value="salaireDESC">Salaire décroissant</option>
                         <option value="id">Id</option>
-                        <option value="username">Username</option>
-                        <option value="login">Last Login</option>
                     </select>
                 </div>
             </div>
@@ -65,26 +66,22 @@ include 'views/partials/head.php';
                 <thead>
                     <tr>
                         <th class="admin-table">Id</th>
-                        <th class="admin-table">Username</th>
-                        <th class="admin-table">Email</th>
-                        <th class="admin-table">Last Login</th>
-                        <th class="admin-table">Rôle</th>
-                        <th class="admin-table">Specialité</th>
-                        <th></th>
+                        <th class="admin-table">Titre</th>
+                        <th class="admin-table">Salaire</th>
+                        <th class="admin-table">Adresse</th>
+                        <th class="admin-table"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($userArray as $user): ?>
+                    <?php foreach ($my_offres as $offre): ?>
                         <tr>
-                            <td class="admin-table-td"><?= $user->getId() ?></td>
-                            <td class="admin-table-td"><?= $user->getUsername() ?></td>
-                            <td class="admin-table-td"><?= $user->getEmail() ?></td>
-                            <td class="admin-table-td"><?= $user->getLast_login() ?></td>
-                            <td class="admin-table-td"><?= $user->getRole() ?></td>
-                            <td class="admin-table-td"><?= $user->getSpecialite() ?></td>
+                            <td class="admin-table-td"><?= $offre->getId() ?></td>
+                            <td class="admin-table-td"><?= $offre->getTitle() ?></td>
+                            <td class="admin-table-td"><?= $offre->getSalaire() ?></td>
+                            <td class="admin-table-td"><?= $offre->getLocalisation() ?></td>
                             <td class="admin-table-td">
-                                <a href="index.php?ctrl=auth&action=user&user=<?= $user->getId() ?>" class="button text-color">Modifier</a>
-                                <a href="index.php?ctrl=auth&action=admin&user=<?= $user->getId() ?>" class="button text-color">Supprimer</a>
+                                <a href="index.php?ctrl=auth&action=offreModif&offre=<?= $offre->getId() ?>" class="button text-color">Modifier</a>
+                                <a href="index.php?ctrl=auth&action=my_offer&offre=<?= $offre->getId() ?>" class="button text-color">Supprimer</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

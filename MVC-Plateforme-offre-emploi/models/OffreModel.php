@@ -144,6 +144,9 @@ class OffreModel extends CoreModel
     public function delete($id)
     {
         $sql = "DELETE
+        FROM required_skills
+        WHERE offre_id_fk =:id;
+        DELETE
         FROM offres
         WHERE offres.id =:id
         ";
@@ -159,5 +162,87 @@ class OffreModel extends CoreModel
         } catch (PDOException $e) {
             die($e->getMessage());
         }
+    }
+
+    public function readOfferFromUser($user_id, $filter = 'titre', $maxOffre = 20)
+    {
+        switch ($filter) {
+            case 'titre':
+                $sql = "SELECT offres.id, users.username AS auteur, title, content, salaire, cover, localisation
+                FROM offres
+                JOIN users ON offres.auteur_id = users.id
+                WHERE users.id =:user_id
+                ORDER BY title
+                LIMIT :max
+                ";
+                break;
+            case 'salaireASC':
+                $sql = "SELECT offres.id, users.username AS auteur, title, content, salaire, cover, localisation
+                FROM offres
+                JOIN users ON offres.auteur_id = users.id
+                WHERE users.id =:user_id
+                ORDER BY salaire ASC
+                LIMIT :max
+                ";
+                break;
+            case 'salaireDESC':
+                $sql = "SELECT offres.id, users.username AS auteur, title, content, salaire, cover, localisation
+                FROM offres
+                JOIN users ON offres.auteur_id = users.id
+                WHERE users.id =:user_id
+                ORDER BY salaire DESC
+                LIMIT :max
+                ";
+                break;
+            case 'id':
+                $sql = "SELECT offres.id, users.username AS auteur, title, content, salaire, cover, localisation
+                FROM offres
+                JOIN users ON offres.auteur_id = users.id
+                WHERE users.id =:user_id
+                ORDER BY offres.id
+                LIMIT :max
+                ";
+                break;
+        }
+
+        try {
+            if (($this->_req = $this->getDb()->prepare($sql)) !== false) {
+                $this->_req->bindParam('max', $maxOffre, PDO::PARAM_INT);
+                $this->_req->bindParam('user_id', $user_id, PDO::PARAM_INT);
+                if ($this->_req->execute()) {
+                    $datas = $this->_req->fetchAll(PDO::FETCH_ASSOC);
+                    return $datas;
+                }
+            }
+            return false;
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function readOffre($offreID)
+    {
+        $sql = "SELECT offres.id, users.username AS auteur, title, content, salaire, cover, localisation
+                FROM offres
+                JOIN users ON offres.auteur_id = users.id
+                WHERE offres.id =:offreID
+                ";
+
+        try {
+            if (($this->_req = $this->getDb()->prepare($sql)) !== false) {
+                $this->_req->bindParam('offreID', $offreID, PDO::PARAM_INT);
+                if ($this->_req->execute()) {
+                    $datas = $this->_req->fetch(PDO::FETCH_ASSOC);
+                    return $datas;
+                }
+            }
+            return false;
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function updateOffre($post,$offreID) {
+        
     }
 }

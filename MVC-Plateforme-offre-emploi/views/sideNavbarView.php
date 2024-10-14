@@ -18,7 +18,7 @@
     }
 </script>
 <aside class="menu text-color back-dark column">
-    <div class="is-size-6 button is-fullwidth text-color" id="burger_button" onclick="nav_menu()">
+    <div class="background is-size-6 button is-fullwidth text-color" id="burger_button" onclick="nav_menu()">
         <</div>
 
             <div id="aside_menu" class="is-block">
@@ -32,6 +32,9 @@
                     <?php endif; ?>
                     <?php if ($connectedUser->getRole() == 'entreprise'): ?>
                         <li class="text-color mb-2"><a class="text-color background" href="index.php?ctrl=auth&action=create_offer">Créer offre</a></li>
+                    <?php endif; ?>
+                    <?php if ($connectedUser->getRole() == 'entreprise'): ?>
+                        <li class="text-color mb-2"><a class="text-color background" href="index.php?ctrl=auth&action=my_offer">Consulter mes offres</a></li>
                     <?php endif; ?>
                     <?php if ($connectedUser->getRole() == 'admin'): ?>
                         <li class="text-color mb-2"><a class="text-color background" href="index.php?ctrl=auth&action=admin">Gérer Users</a></li>
